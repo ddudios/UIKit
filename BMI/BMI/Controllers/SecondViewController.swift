@@ -13,14 +13,18 @@ class SecondViewController: UIViewController {
     @IBOutlet weak var adviceLabel: UILabel!
     @IBOutlet weak var backButton: UIButton!
     
-    var bmiNumber: Double?
-    var adviceString: String?
-    var bmiColor: UIColor?
+    var bmi: BMI?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        makeUI()
+        makeUI()  // guard문에 의해서 벗어나지 않도록 먼저 호출
+        
+        guard let bmi else { return }
+        bmiNumberLabel.text = String(bmi.value)
+        
+        adviceLabel.text = bmi.advice
+        bmiNumberLabel.backgroundColor = bmi.matchColor
     }
     
     func makeUI() {
@@ -31,12 +35,6 @@ class SecondViewController: UIViewController {
         backButton.setTitle("다시 계산하기", for: .normal)
         backButton.clipsToBounds = true
         backButton.layer.cornerRadius = 5
-        
-        guard let bmiNumber else { return }
-        bmiNumberLabel.text = String(bmiNumber)
-        
-        adviceLabel.text = adviceString
-        bmiNumberLabel.backgroundColor = bmiColor
     }
 
     @IBAction func backButtonTapped(_ sender: UIButton) {
