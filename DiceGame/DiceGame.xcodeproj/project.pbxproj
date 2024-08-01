@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B07AB8772C5C4237007A41D9 /* DiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B07AB8762C5C4237007A41D9 /* DiceManager.swift */; };
 		B0A579672C46011300B95A8F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0A579662C46011300B95A8F /* AppDelegate.swift */; };
 		B0A579692C46011300B95A8F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0A579682C46011300B95A8F /* SceneDelegate.swift */; };
 		B0A5796B2C46011300B95A8F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0A5796A2C46011300B95A8F /* ViewController.swift */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B07AB8762C5C4237007A41D9 /* DiceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiceManager.swift; sourceTree = "<group>"; };
 		B0A579632C46011300B95A8F /* DiceGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DiceGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0A579662C46011300B95A8F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B0A579682C46011300B95A8F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -37,6 +39,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B07AB8732C5C41CA007A41D9 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				B07AB8762C5C4237007A41D9 /* DiceManager.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		B07AB8742C5C41D7007A41D9 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				B0A5796C2C46011300B95A8F /* Main.storyboard */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		B07AB8752C5C41DE007A41D9 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				B0A5796A2C46011300B95A8F /* ViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
 		B0A5795A2C46011300B95A8F = {
 			isa = PBXGroup;
 			children = (
@@ -58,8 +84,9 @@
 			children = (
 				B0A579662C46011300B95A8F /* AppDelegate.swift */,
 				B0A579682C46011300B95A8F /* SceneDelegate.swift */,
-				B0A5796A2C46011300B95A8F /* ViewController.swift */,
-				B0A5796C2C46011300B95A8F /* Main.storyboard */,
+				B07AB8732C5C41CA007A41D9 /* Models */,
+				B07AB8742C5C41D7007A41D9 /* Views */,
+				B07AB8752C5C41DE007A41D9 /* Controllers */,
 				B0A5796F2C46011400B95A8F /* Assets.xcassets */,
 				B0A579712C46011400B95A8F /* LaunchScreen.storyboard */,
 				B0A579742C46011400B95A8F /* Info.plist */,
@@ -138,6 +165,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B07AB8772C5C4237007A41D9 /* DiceManager.swift in Sources */,
 				B0A5796B2C46011300B95A8F /* ViewController.swift in Sources */,
 				B0A579672C46011300B95A8F /* AppDelegate.swift in Sources */,
 				B0A579692C46011300B95A8F /* SceneDelegate.swift in Sources */,
