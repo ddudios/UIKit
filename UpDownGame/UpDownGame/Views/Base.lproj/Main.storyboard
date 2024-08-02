@@ -242,6 +242,7 @@
                     <connections>
                         <outlet property="mainLabel" destination="OW6-kI-f7H" id="BvX-jC-5QU"/>
                         <outlet property="numberLabel" destination="kPV-yP-eb9" id="gFX-46-Aqy"/>
+                        <outlet property="resetButton" destination="3s6-oC-Ehq" id="Fij-d0-tQ3"/>
                         <outlet property="selectButton" destination="S93-Fu-4qw" id="Gij-Re-6cu"/>
                     </connections>
                 </viewController>
