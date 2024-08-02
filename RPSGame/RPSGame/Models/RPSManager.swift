@@ -8,8 +8,8 @@
 import Foundation
 
 struct RPSManager {
-    var comChoice: Rps = Rps(rawValue: Int.random(in: 1...3))!
-    var myChoice: Rps = .ready
+    private var comChoice: Rps = Rps(rawValue: Int.random(in: 1...3))!
+    private var myChoice: Rps = .ready
     
     // 준비상태
     func getReady() -> Rps {

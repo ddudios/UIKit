@@ -37,12 +37,20 @@ class ViewController: UIViewController {
         
         resetButton.isEnabled = false
         resetButton.backgroundColor = .gray
+        
+        if rpsManager.getUserRPS() == Rps.ready {
+            selectButton.isEnabled = false
+            selectButton.backgroundColor = .gray
+        }
     }
 
     @IBAction func rpsButtonTapped(_ sender: UIButton) {
         // 가위/바위/보를 선택해서 그 정보를 저장해야 됨
         guard let title = sender.currentTitle else { return }
         rpsManager.userGetSelected(name: title)
+        
+        selectButton.isEnabled = true
+        selectButton.backgroundColor = .link
     }
     
     @IBAction func selectButtonTapped(_ sender: UIButton) {
@@ -94,8 +102,6 @@ class ViewController: UIViewController {
         myChoiceButton2.backgroundColor = .systemGreen
         myChoiceButton3.isEnabled = true
         myChoiceButton3.backgroundColor = .systemGreen
-        selectButton.isEnabled = true
-        selectButton.backgroundColor = .link
         resetButton.isEnabled = false
         resetButton.backgroundColor = .gray
     }
