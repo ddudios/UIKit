@@ -68,8 +68,8 @@
 			children = (
 				B08399572C60AB2D00E9E302 /* AppDelegate.swift */,
 				B08399592C60AB2D00E9E302 /* SceneDelegate.swift */,
-				B083995B2C60AB2D00E9E302 /* LoginViewController.swift */,
 				B083996B2C60AB7800E9E302 /* FirstViewController.swift */,
+				B083995B2C60AB2D00E9E302 /* LoginViewController.swift */,
 				B083996D2C60ABAB00E9E302 /* SecondViewController.swift */,
 				B083996F2C60ABDC00E9E302 /* ThirdViewController.swift */,
 				B08399712C60AC0100E9E302 /* FourthViewController.swift */,

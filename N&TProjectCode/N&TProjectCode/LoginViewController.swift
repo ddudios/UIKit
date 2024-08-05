@@ -27,6 +27,7 @@ class LoginViewController: UIViewController {
     }
     
     func makeUI() {
+        view.backgroundColor = .white
         view.addSubview(loginButton)
         
         NSLayoutConstraint.activate([
@@ -38,42 +39,15 @@ class LoginViewController: UIViewController {
     }
     
     @objc func loginButtonTapped() {
-        // 탭바컨트롤러 생성
-        let tabBarVC = UITabBarController()
+        // presentingViewController: 현재 뷰컨트롤러를 표시한 뷰컨트롤러(FirstViewController: 탭컨트롤러->네비게이션컨트롤러->뷰컨트롤러)
+        if let presentingVC = presentingViewController {
+            let tabBarCon = presentingVC as! UITabBarController   // 탭바에 접근하기
+            let nav = tabBarCon.viewControllers?[0] as! UINavigationController  // 네비게이션바에 접근하기
+            let firstVC = nav.viewControllers[0] as! FirstViewController  // FirstVC에 접근하기
+            firstVC.isLoggedIn.toggle()
+        }
         
-        // 첫번째 화면은 네비게이션 컨트롤러로 생성 (기본로트뷰 설정)
-        let vc1 = UINavigationController(rootViewController: FirstViewController())
-        let vc2 = SecondViewController()
-        let vc3 = ThirdViewController()
-        let vc4 = FourthViewController()
-        let vc5 = FifthViewController()
-        
-        // 탭바 이름 설정
-        vc1.title = "Main"
-        vc2.title = "Search"
-        vc3.title = "Post"
-        vc4.title = "Likes"
-        vc5.title = "Me"
-        
-        // 탭바로 사용할 ViewController 설정
-        tabBarVC.setViewControllers([vc1, vc2, vc3, vc4, vc5], animated: false)
-        
-        // 탭바 PresentStyle 설정
-        tabBarVC.modalPresentationStyle = .fullScreen
-        
-        // 탭바 배경색 설정
-        tabBarVC.tabBar.backgroundColor = .white
-        
-        // 탭바 이미지 설정
-        guard let items = tabBarVC.tabBar.items else { return }
-        items[0].image = UIImage(systemName: "house")
-        items[1].image = UIImage(systemName: "magnifyingglass")
-        items[2].image = UIImage(systemName: "bubble.left.and.bubble.right")
-        items[3].image = UIImage(systemName: "suit.heart")
-        items[4].image = UIImage(systemName: "person")
-        
-        // 화면 이동
-        present(tabBarVC, animated: true, completion: nil)
+        dismiss(animated: true)
     }
 }
 
