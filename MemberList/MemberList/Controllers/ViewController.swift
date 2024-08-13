@@ -14,6 +14,11 @@ final class ViewController: UIViewController {
     
     let memberListManager = MemberListManager()
     
+    lazy var plusButton: UIBarButtonItem = {
+        let button = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(plusButtonTapped))
+        return button
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -26,15 +31,20 @@ final class ViewController: UIViewController {
         setupTableViewConstraints()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        tableView.reloadData()  // tableView refresh
+    }
+    
     func setupNavigationBar() {
         title = "회원 목록"
         let appearance = UINavigationBarAppearance()
-//        appearance.configureWithOpaqueBackground()
+        appearance.configureWithOpaqueBackground()
         appearance.backgroundColor = .white
         navigationController?.navigationBar.tintColor = .systemBlue
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.compactAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        self.navigationItem.rightBarButtonItem = self.plusButton
     }
     
     func setupData() {
@@ -61,6 +71,11 @@ final class ViewController: UIViewController {
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
     }
+    
+    @objc func plusButtonTapped() {
+        let detailVC = DetailViewController()
+        navigationController?.pushViewController(detailVC, animated: true)
+    }
 }
 
 // 테이블뷰 셀 형태 설정
@@ -84,4 +99,16 @@ extension ViewController: UITableViewDataSource {
 
 extension ViewController: UITableViewDelegate {
     
+    // 셀이 눌렸을 때 동작
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let detailVC = DetailViewController()
+        let array = memberListManager.getMemberList()
+        
+        detailVC.member = array[indexPath.row]
+        
+        // 네비게이션컨트롤러를 이용한 화면 이동
+        navigationController?.pushViewController(detailVC, animated: true)
+        // viewController: 이동할 다음 화면
+        // animated: 자연스럽게 넘어가려면 true
+    }
 }

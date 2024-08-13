@@ -26,10 +26,7 @@ struct Member {
     var address: String?
     
     init(name: String? = nil, age: Int? = nil, phone: String? = nil, address: String? = nil) {
-        
-        // 인스턴스 생성시 증가
-        Member.memberNumbers += 1
-        
+                
         // 자동 순번
         self.memberId = Member.memberNumbers
         
@@ -38,5 +35,8 @@ struct Member {
         self.age = age
         self.phone = phone
         self.address = address
+        
+        // 인스턴스 생성시 증가
+        Member.memberNumbers += 1
     }
 }
