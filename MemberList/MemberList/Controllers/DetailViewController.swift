@@ -13,6 +13,11 @@ final class DetailViewController: UIViewController {
     // 해당 뷰 생성해서 담기
     private let detailView = DetailView()
     
+    // 대리자 역할을 할 수 있는 변수 생성
+    // DetailViewController의 대리자는
+    // MemberDelegate프로토콜을 채택한 타입만 가능하다
+    weak var delegate: MemberDelegate?
+    
     // 이전 화면에서 전달받은 데이터를 저장할 속성
     // 테이블뷰를 가지고 있는 ViewController의 데이터 -> DetailViewController
     var member: Member?
@@ -91,9 +96,11 @@ final class DetailViewController: UIViewController {
             var newMemeber = Member(name: name, age: age, phone: phone, address: address)
             newMemeber.memberImage = detailView.mainImageView.image
             
-            let index = navigationController!.viewControllers.count - 2
-            let vc = navigationController?.viewControllers[index] as! ViewController
-            vc.memberListManager.makeNewMember(newMemeber)
+//            let index = navigationController!.viewControllers.count - 2
+//            let vc = navigationController?.viewControllers[index] as! ViewController
+//            vc.memberListManager.makeNewMember(newMemeber)
+            
+            delegate?.addNewMember(newMemeber)
             
             navigationController?.popViewController(animated: true)
             
@@ -114,17 +121,20 @@ final class DetailViewController: UIViewController {
             
             detailView.member = member
             
-            // 네비게이션컨트롤러를 통해서 현재 화면으로 넘어왔으니까
-            // 이전 화면으로 넘어갈때도 네비게이션컨트롤러 사용
-            // 네비게이션컨트롤러: 화면 위에 화면을 계속 올리는 방식으로 동작
-            // 함수를 스택에서 실행하는 것처럼 push를 통해 메모리르 쌓는 방식으로 동작
-            // navigationController의 속성중에 viewControllers가 있다
-            // navigationControllerrk ViewController들을 관리
+            /* viewWillAppear로 업데이트 하는 방식
+            // 네비게이션컨트롤러를 통해서 이전 화면 접근
             let index = navigationController!.viewControllers.count - 2
             let vc = navigationController?.viewControllers[index] as! ViewController
             
             // 변경된 데이터를 뷰컨트롤러에 있는 비즈니스로직을 관리하는 매니저에게 전달
             vc.memberListManager.updateMember(index: memberId, member: member!)
+            
+            navigationController?.popViewController(animated: true)
+             */
+            
+            // 델리게이트 방식으로 구현
+            // 대리자의 메서드 호출
+            delegate?.update(index: memberId, member!)
             
             navigationController?.popViewController(animated: true)
         }

@@ -31,9 +31,10 @@ final class ViewController: UIViewController {
         setupTableViewConstraints()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        tableView.reloadData()  // tableView refresh
-    }
+    // 커스텀 델리게이트에서 설정해줬기 때문에 필요없음
+//    override func viewWillAppear(_ animated: Bool) {
+//        tableView.reloadData()  // tableView refresh
+//    }
     
     func setupNavigationBar() {
         title = "회원 목록"
@@ -74,6 +75,7 @@ final class ViewController: UIViewController {
     
     @objc func plusButtonTapped() {
         let detailVC = DetailViewController()
+        detailVC.delegate = self
         navigationController?.pushViewController(detailVC, animated: true)
     }
 }
@@ -102,13 +104,32 @@ extension ViewController: UITableViewDelegate {
     // 셀이 눌렸을 때 동작
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let detailVC = DetailViewController()
-        let array = memberListManager.getMemberList()
+        detailVC.delegate = self
         
+        let array = memberListManager.getMemberList()
         detailVC.member = array[indexPath.row]
         
         // 네비게이션컨트롤러를 이용한 화면 이동
         navigationController?.pushViewController(detailVC, animated: true)
         // viewController: 이동할 다음 화면
         // animated: 자연스럽게 넘어가려면 true
+    }
+}
+
+// 커스텀 델리게이트 채택
+extension ViewController: MemberDelegate {
+    func addNewMember(_ member: Member) {
+        
+        // 디테일뷰의 새로운 멤버 정보 -> 뷰컨트롤러가 전달받아서 -> 모델에 전달
+        memberListManager.makeNewMember(member)
+        
+        // 업데이트된 경우에 테이블뷰 리프레쉬
+        tableView.reloadData()
+    }
+    
+    func update(index: Int, _ member: Member) {
+        print(#function)
+        memberListManager.updateMember(index: index, member: member)
+        tableView.reloadData()
     }
 }

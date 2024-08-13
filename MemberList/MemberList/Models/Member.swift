@@ -7,6 +7,11 @@
 
 import UIKit
 
+protocol MemberDelegate: AnyObject {
+    func addNewMember(_ member: Member)
+    func update(index: Int, _ member: Member)
+}
+
 struct Member {
     // 멤버의 (절대적) 순서를 위한 타입 저장 속성
     static var memberNumbers: Int = 0
