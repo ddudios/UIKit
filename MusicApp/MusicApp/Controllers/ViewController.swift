@@ -11,6 +11,9 @@ final class ViewController: UIViewController {
 
     @IBOutlet weak var musicTableView: UITableView!
     
+    // 서치컨트롤러 생성
+    let searchController = UISearchController()
+    
     // 네트워크매니저 생성 (싱글톤)
     var networkManager = NetworkManager.shared
     
@@ -22,8 +25,24 @@ final class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupSearchBar()
         setupTableView()
         setupData()
+    }
+    
+    // 서치바 세팅
+    func setupSearchBar() {
+        
+        // 네비게이션 아이템에 서치바 세팅
+        self.title = "Music Search"
+        // 네비게이션아이템에 있는 서치컨트롤러에 생성한 서치컨트롤러 할당하면
+        // 네비게이션아이템에 서치바가 생긴다
+        // 서치바를 감싸고 있는게 서치컨트롤러이기 때문에 할당만 해주면 서치바가 생긴다
+        navigationItem.searchController = searchController
+        
+        // 서치바를 사용하려면 델리게이트를 설정해줘야 한다
+        // 대리자가 self(ViewController)가 된다
+        searchController.searchBar.delegate = self
     }
 
     func setupTableView() {
@@ -64,6 +83,7 @@ final class ViewController: UIViewController {
     }
 }
 
+
 extension ViewController: UITableViewDataSource {
     
     // 배열의 개수 0개 -> 네트워킹 -> 배열에 데이터 추가 -> 테이블뷰 리로드
@@ -80,7 +100,7 @@ extension ViewController: UITableViewDataSource {
         cell.songNameLabel.text = musicArray[indexPath.row].soneName
         cell.artistNameLabel.text = musicArray[indexPath.row].artistName
         cell.albumNameLabel.text = musicArray[indexPath.row].albumName
-        cell.releaseDateLabel.text = musicArray[indexPath.row].releaseDate
+        cell.releaseDateLabel.text = musicArray[indexPath.row].releaseDateString
         
         cell.selectionStyle = .none
         
@@ -98,4 +118,56 @@ extension ViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
+}
+
+
+//MARK: - (단순) 서치바 확장
+
+extension ViewController: UISearchBarDelegate {
+    
+    // 유저가 글자를 입력하는 순간마다 호출되는 메서드
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        // 입력되는 글자마다 searchText파라미터로 전달된다
+        print(searchText)
+        
+        // 네트워킹을 시작하기 전에 (이미 검색된)데이터는 다시 빈배열로 만들어줘야 한다
+        self.musicArray = []
+        
+        // 네트워크매니저한테 입력하는 텍스트마다 파라미터로 넣어서 다시 네트워킹 시작
+        networkManager.fetchMusic(searchTerm: searchText) { result in
+            // 배열을 다시 새롭게 만든 다음에 메인큐에서 테이블뷰 리로드
+            switch result {
+            case .success(let musicDatas):
+                self.musicArray = musicDatas
+                DispatchQueue.main.async {
+                    self.musicTableView.reloadData()
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    /* 둘중 하나만 선택
+    // 검색(Search)버튼을 눌렀을때 호출되는 메서드
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        
+        // 서치바에 있는 텍스트
+        guard let text = searchController.searchBar.text else { return }
+        
+        self.musicArray = []
+        networkManager.fetchMusic(searchTerm: text) { result in
+            switch result {
+            case .success(let musicDatas):
+                self.musicArray = musicDatas
+                DispatchQueue.main.async {
+                    self.musicTableView.reloadData()
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        self.view.endEditing(true)
+    }*/
 }
