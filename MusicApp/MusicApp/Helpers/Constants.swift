@@ -18,5 +18,13 @@ public enum MusicApi {
 // 사용하게될 Cell 문자열 묶음
 public struct Cell {
     static let musicCellIdentifier = "MusicCell"
+    static let musicCollectionViewCellIdentifier = "MusicCollectionViewCell"
+    private init() {}
+}
+
+// 컬렉션뷰 구성을 위한 설정
+public struct CVCell {
+    static let spacingWidth: CGFloat = 1  // 간격
+    static let cellColumns: CGFloat = 3  // 한줄에 보일 컨텐츠 개수
     private init() {}
 }

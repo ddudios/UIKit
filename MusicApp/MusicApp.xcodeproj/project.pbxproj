@@ -18,6 +18,8 @@
 		B068AA522C6EC584008A83B2 /* MusicCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B068AA502C6EC584008A83B2 /* MusicCell.xib */; };
 		B068AA542C6ECDB3008A83B2 /* Music.swift in Sources */ = {isa = PBXBuildFile; fileRef = B068AA532C6ECDB3008A83B2 /* Music.swift */; };
 		B068AA562C6ED591008A83B2 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B068AA552C6ED591008A83B2 /* NetworkManager.swift */; };
+		B0B452982C706BBA003A6103 /* SearchResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0B452972C706BBA003A6103 /* SearchResultViewController.swift */; };
+		B0B452A22C706F87003A6103 /* MusicCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0B452A12C706F87003A6103 /* MusicCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +36,8 @@
 		B068AA502C6EC584008A83B2 /* MusicCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MusicCell.xib; sourceTree = "<group>"; };
 		B068AA532C6ECDB3008A83B2 /* Music.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Music.swift; sourceTree = "<group>"; };
 		B068AA552C6ED591008A83B2 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		B0B452972C706BBA003A6103 /* SearchResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewController.swift; sourceTree = "<group>"; };
+		B0B452A12C706F87003A6103 /* MusicCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +90,7 @@
 				B043B4FA2C6D678A00C898D7 /* Main.storyboard */,
 				B068AA4F2C6EC584008A83B2 /* MusicCell.swift */,
 				B068AA502C6EC584008A83B2 /* MusicCell.xib */,
+				B0B452A12C706F87003A6103 /* MusicCollectionViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -102,6 +107,7 @@
 			isa = PBXGroup;
 			children = (
 				B043B4F82C6D678A00C898D7 /* ViewController.swift */,
+				B0B452972C706BBA003A6103 /* SearchResultViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -199,7 +205,9 @@
 				B043B4F52C6D678A00C898D7 /* AppDelegate.swift in Sources */,
 				B068AA562C6ED591008A83B2 /* NetworkManager.swift in Sources */,
 				B043B4F72C6D678A00C898D7 /* SceneDelegate.swift in Sources */,
+				B0B452A22C706F87003A6103 /* MusicCollectionViewCell.swift in Sources */,
 				B043B50E2C6D6D3B00C898D7 /* Constants.swift in Sources */,
+				B0B452982C706BBA003A6103 /* SearchResultViewController.swift in Sources */,
 				B068AA542C6ECDB3008A83B2 /* Music.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

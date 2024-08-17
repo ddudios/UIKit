@@ -11,8 +11,19 @@ final class ViewController: UIViewController {
 
     @IBOutlet weak var musicTableView: UITableView!
     
-    // 서치컨트롤러 생성
-    let searchController = UISearchController()
+    // 서치컨트롤러 생성 방법 (🩶🖤)
+    // 🩶 서치컨트롤러 사용
+//    let searchController = UISearchController()
+    
+    // 🖤 서치Result컨트롤러 사용
+    let searchController = UISearchController(searchResultsController: UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SearchResultViewController") as! SearchResultViewController)
+    // searchResultController 생성: UIViewController타입
+    // - UIStoryboard(name:bundle:)
+    // - name: 스토리보드 이름
+    // - bundle: nil(없음)
+    // - .instantiateViewController(withIdentifier:) 뷰컨트롤러 생성
+    // - withIdentifier: 생성하는 뷰컨트롤러 이름 (컬렉션뷰컨트롤러의 Storyboard ID)
+    // - SearchResultViewController로 타입캐스팅
     
     // 네트워크매니저 생성 (싱글톤)
     var networkManager = NetworkManager.shared
@@ -35,14 +46,19 @@ final class ViewController: UIViewController {
         
         // 네비게이션 아이템에 서치바 세팅
         self.title = "Music Search"
-        // 네비게이션아이템에 있는 서치컨트롤러에 생성한 서치컨트롤러 할당하면
-        // 네비게이션아이템에 서치바가 생긴다
-        // 서치바를 감싸고 있는게 서치컨트롤러이기 때문에 할당만 해주면 서치바가 생긴다
+        // 서치바를 감싸고 있는게 서치컨트롤러이기 때문에
+        // 네비게이션아이템에 있는 서치컨트롤러에 할당만 해주면 서치바가 생긴다
         navigationItem.searchController = searchController
         
-        // 서치바를 사용하려면 델리게이트를 설정해줘야 한다
-        // 대리자가 self(ViewController)가 된다
-        searchController.searchBar.delegate = self
+        // 🩶 서치컨트롤러 사용시 설정 (단순 구현)
+//        searchController.searchBar.delegate = self
+        
+        // 🖤 서치Result컨트롤러 사용시 설정 (복잡한 구현 가능)
+        // 글자마다 검색 기능 + 새로운 화면을 보여주는 것도 가능
+        searchController.searchResultsUpdater = self
+        
+        // 첫글자 대문자 설정 없애기
+        searchController.searchBar.autocapitalizationType = .none
     }
 
     func setupTableView() {
@@ -121,8 +137,10 @@ extension ViewController: UITableViewDelegate {
 }
 
 
-//MARK: - (단순) 서치바 확장
+// MARK: - 서치바 확장
 
+/*
+// 🩶 서치컨트롤러관련 프로토콜
 extension ViewController: UISearchBarDelegate {
     
     // 유저가 글자를 입력하는 순간마다 호출되는 메서드
@@ -170,4 +188,20 @@ extension ViewController: UISearchBarDelegate {
         }
         self.view.endEditing(true)
     }*/
+}*/
+
+// 🖤 서치Result컨트롤러관련 프로토콜
+// 검색하는 동안 (새로운 화면을 보여주는) 복잡한 내용 구현 가능
+extension ViewController: UISearchResultsUpdating {
+    
+    // 유저가 글자를 입력하는 순간마다 호출되는 메서드
+    func updateSearchResults(for searchController: UISearchController) {
+        print("서치바에 입력되는 단어", searchController.searchBar.text)
+        
+        // 글자를 치는 순간에 다른 새로운 화면을 보여주기 (여기서 보여주는 다른 화면: 컬렉션뷰)
+        let vc = searchController.searchResultsController as! SearchResultViewController
+        
+        // 컬렉션뷰에 검색어 전달
+        vc.searchTerm = searchController.searchBar.text ?? ""
+    }
 }
