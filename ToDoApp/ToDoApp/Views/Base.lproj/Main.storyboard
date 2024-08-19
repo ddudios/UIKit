@@ -20,7 +20,7 @@
                                 <rect key="frame" x="0.0" y="103" width="393" height="715"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="169" id="SIY-kC-yiA">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="169" id="SIY-kC-yiA" customClass="ToDoCell" customModule="ToDoApp" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="50" width="393" height="169"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="SIY-kC-yiA" id="fJH-Ez-MEw">
@@ -90,6 +90,12 @@
                                                 <constraint firstItem="B3j-aF-dHB" firstAttribute="leading" secondItem="fJH-Ez-MEw" secondAttribute="leading" constant="25" id="n6i-Ie-pO9"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="backView" destination="B3j-aF-dHB" id="vZ7-Ed-Hk0"/>
+                                            <outlet property="dateTextLabel" destination="atQ-9i-cXg" id="0LE-3o-bm6"/>
+                                            <outlet property="toDoTextLabel" destination="Ykn-U4-hal" id="zEK-Cl-VVW"/>
+                                            <outlet property="updateButton" destination="j4c-lY-ysy" id="yA3-7L-5FR"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>

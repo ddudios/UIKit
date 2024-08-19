@@ -7,7 +7,20 @@
 
 import UIKit
 
+// 클래스에서만 채택할 수 있는 프로토콜
+protocol UpdateButtonProtocol: AnyObject {
+    // 자기 자신 전달
+    func updateButtonTapped(cell: ToDoCell)
+}
+
 class ToDoCell: UITableViewCell {
+    @IBOutlet weak var backView: UIView!
+    @IBOutlet weak var toDoTextLabel: UILabel!
+    @IBOutlet weak var dateTextLabel: UILabel!
+    @IBOutlet weak var updateButton: UIButton!
+    
+    // 프로토콜을 채택한 타입이 대리자
+    weak var delegate: UpdateButtonProtocol?
     
     // TodoData를 전달받을 변수
     // ⭐️ 전달받으면 => 표시하는 메서드 실행
@@ -19,13 +32,12 @@ class ToDoCell: UITableViewCell {
     }
     
     // (델리게이트 대신에) 실행하고싶은 클로저를 저장
-    // updateButtonPressed를 실행하면
-    // 뷰컨트롤러에서 전달된 클로저를 실행하는 방식으로 동작
+    // updateButtonPressed를 실행하면 Viewcontroller에서 전달된 클로저를 실행하는 방식으로 동작
     var updateButtonPressed: (ToDoCell) -> Void = { (sender) in }
 
+    // 스토리보드의 생성자
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -39,9 +51,11 @@ class ToDoCell: UITableViewCell {
     }
     
     @IBAction func updateButtonTapped(_ sender: UIButton) {
-        // ⭐️ 내 자신 ToDoCell을 전달하면서
-        // 뷰컨트롤러에서 전달받은 클로저를 실행
+        // ⭐️ 내 자신 ToDoCell을 전달하면서 뷰컨트롤러에서 전달받은 클로저를 실행
+        // input파라미터를 ToDoCell타입으로 만들었으니까 self(ToDoCell)를 전달하면 된다
         updateButtonPressed(self)
+        
+        // 대리자한테 업데이트 버튼이 눌렸다는 것을 실행시킴
+        delegate?.updateButtonTapped(cell: self)
     }
-    
 }
