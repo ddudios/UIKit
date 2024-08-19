@@ -112,7 +112,7 @@
                     <navigationItem key="navigationItem" id="dJh-jW-YIT"/>
                     <connections>
                         <outlet property="tableView" destination="9wh-3v-MWx" id="NXV-Z8-mmY"/>
-                        <segue destination="9S0-K9-Chm" kind="show" identifier="ToDoCell" id="Udh-aS-8dE"/>
+                        <segue destination="9S0-K9-Chm" kind="show" identifier="ToDetailView" id="Udh-aS-8dE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -120,10 +120,10 @@
             </objects>
             <point key="canvasLocation" x="1063.3587786259541" y="3.5211267605633805"/>
         </scene>
-        <!--View Controller-->
+        <!--Detail View Controller-->
         <scene sceneID="gsb-QE-yTQ">
             <objects>
-                <viewController id="9S0-K9-Chm" sceneMemberID="viewController">
+                <viewController id="9S0-K9-Chm" customClass="DetailViewController" customModule="ToDoApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="6Ak-II-sx1">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -131,29 +131,41 @@
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="Wgu-L0-YwE">
                                 <rect key="frame" x="25" y="175" width="343" height="30"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Yg-0i-aKD">
+                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Yg-0i-aKD">
                                         <rect key="frame" x="0.0" y="0.0" width="74.666666666666671" height="30"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                        <state key="normal" title="Button"/>
+                                        <state key="normal" title="Red"/>
+                                        <connections>
+                                            <action selector="colorButtonTapped:" destination="9S0-K9-Chm" eventType="touchUpInside" id="blZ-3n-6CF"/>
+                                        </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EB7-cJ-0O7">
+                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EB7-cJ-0O7">
                                         <rect key="frame" x="89.666666666666686" y="0.0" width="74.333333333333314" height="30"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                        <state key="normal" title="Button"/>
+                                        <state key="normal" title="Green"/>
+                                        <connections>
+                                            <action selector="colorButtonTapped:" destination="9S0-K9-Chm" eventType="touchUpInside" id="TPb-U0-lsf"/>
+                                        </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OOm-UJ-AYo">
+                                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OOm-UJ-AYo">
                                         <rect key="frame" x="179" y="0.0" width="74.666666666666686" height="30"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                        <state key="normal" title="Button"/>
+                                        <state key="normal" title="Blue"/>
+                                        <connections>
+                                            <action selector="colorButtonTapped:" destination="9S0-K9-Chm" eventType="touchUpInside" id="Kum-o9-bxJ"/>
+                                        </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cu2-ZG-TaF">
+                                    <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cu2-ZG-TaF">
                                         <rect key="frame" x="268.66666666666669" y="0.0" width="74.333333333333314" height="30"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                        <state key="normal" title="Button"/>
+                                        <state key="normal" title="Purple"/>
+                                        <connections>
+                                            <action selector="colorButtonTapped:" destination="9S0-K9-Chm" eventType="touchUpInside" id="sxh-1w-M1t"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>
@@ -192,6 +204,9 @@
                                 <state key="normal" title="Button">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="saveButtonTapped:" destination="9S0-K9-Chm" eventType="touchUpInside" id="pPJ-Mn-N3J"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="DQm-Z8-PRU"/>
@@ -209,6 +224,15 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="ZOv-wN-khk"/>
+                    <connections>
+                        <outlet property="backgroundView" destination="fyU-OB-56F" id="Uj8-sg-hul"/>
+                        <outlet property="blueButton" destination="OOm-UJ-AYo" id="Uwp-ac-U87"/>
+                        <outlet property="greenButton" destination="EB7-cJ-0O7" id="auv-yW-moh"/>
+                        <outlet property="mainTextView" destination="Shh-er-QSK" id="WXr-ph-Xe1"/>
+                        <outlet property="purpleButton" destination="cu2-ZG-TaF" id="1dH-Il-XkD"/>
+                        <outlet property="redButton" destination="2Yg-0i-aKD" id="uU4-KF-7dd"/>
+                        <outlet property="saveButton" destination="ggr-CZ-rDN" id="oiP-em-ETP"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c7u-Bd-llg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -244,7 +268,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray4Color">
-            <color red="0.81960784313725488" green="0.81960784313725488" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.81960784310000001" green="0.81960784310000001" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemYellowColor">
             <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
