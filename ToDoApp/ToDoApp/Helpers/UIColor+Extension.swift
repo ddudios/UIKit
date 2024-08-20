@@ -7,8 +7,6 @@
 
 import UIKit
 
-// UIColor는 애플이 UIKit프레임워크에 이미 만들어 놓은 타입
-// 그 타입을 직접적으로 수정은 못하고 확장은 가능 (구글링)
 extension UIColor {
     
     // Hex String -> UIColor

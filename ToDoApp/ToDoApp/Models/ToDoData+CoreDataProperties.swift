@@ -19,6 +19,15 @@ extension ToDoData {
     @NSManaged public var memoText: String?
     @NSManaged public var color: Int64
     @NSManaged public var date: Date?
+    
+    var dataString: String? {
+        let myFormatter = DateFormatter()
+        myFormatter.dateFormat = "yyyy-MM-dd"
+        
+        guard let date else { return "" }
+        let savedDateString = myFormatter.string(from: date)
+        return savedDateString
+    }
 
 }
 

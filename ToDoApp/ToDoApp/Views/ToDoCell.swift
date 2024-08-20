@@ -29,14 +29,29 @@ class ToDoCell: UITableViewCell {
     // 스토리보드의 생성자
     override func awakeFromNib() {
         super.awakeFromNib()
+        configureUI()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
+    
+    func configureUI() {
+        backView.clipsToBounds = true
+        backView.layer.cornerRadius = 10
+        
+        updateButton.clipsToBounds = true
+        updateButton.layer.cornerRadius = 8
+    }
 
     func configureUIwithData() {
+        toDoTextLabel.text = toDoData?.memoText
+        dateTextLabel.text = toDoData?.dataString
         
+        guard let colorNum = toDoData?.color else { return }
+        let color = MyColor(rawValue: colorNum) ?? .red
+        backView.backgroundColor = color.viewColor
+        updateButton.backgroundColor = color.buttonColor
     }
     
     @IBAction func updateButtonTapped(_ sender: UIButton) {

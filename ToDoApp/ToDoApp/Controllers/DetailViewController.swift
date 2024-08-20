@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DetailViewController: UIViewController {
+final class DetailViewController: UIViewController {
     
     // 색을 바꿀때 접근할 버튼
     @IBOutlet weak var redButton: UIButton!
@@ -51,6 +51,8 @@ class DetailViewController: UIViewController {
         
         saveButton.clipsToBounds = true
         saveButton.layer.cornerRadius = 8
+        
+        clearButtonColors()
     }
     
     func configureUI() {
@@ -64,6 +66,10 @@ class DetailViewController: UIViewController {
             mainTextView.becomeFirstResponder()
             
             saveButton.setTitle("UPDATE", for: .normal)
+            
+            let color = MyColor(rawValue: toDoData.color)
+            setupColorTheme(color: color)
+            
         } else {
             // 기존 데이터가 없을 때
             self.title = "새로운 메모 생성하기"
@@ -72,7 +78,10 @@ class DetailViewController: UIViewController {
             mainTextView.textColor = .lightGray
             
             saveButton.setTitle("SAVE", for: .normal)
+            
+            setupColorTheme(color: .red)
         }
+        setupColorButton(num: temporaryNum ?? 1)
     }
     
     // 버튼을 둥글게 깎는 정확한 시점
@@ -88,19 +97,15 @@ class DetailViewController: UIViewController {
         }
     }
     
-    // 눌리지 않은 버튼은 연하게 표시하는 설정
-    func clearButtonColors() {
-        
-    }
-    
-    // 눌린 버튼을 진하게 표시하는 설정
-    func setupColorButton(num: Int64) {
-        
-    }
-    
     @IBAction func colorButtonTapped(_ sender: UIButton) {
         // 임시 숫자 저장
         self.temporaryNum = Int64(sender.tag)
+        
+        let color = MyColor(rawValue: Int64(sender.tag))
+        setupColorTheme(color: color)
+        
+        clearButtonColors()
+        setupColorButton(num: Int64(sender.tag))
     }
     
     @IBAction func saveButtonTapped(_ sender: UIButton) {
@@ -109,9 +114,64 @@ class DetailViewController: UIViewController {
             // 텍스트뷰에 저장되어 있는 내용
             toDoData.memoText = mainTextView.text
             toDoData.color = temporaryNum ?? 1
+            
+            // 세이브버튼을 눌렀을때 업데이트하려면
+            // 코어데이터한테 기존의 데이터를 업데이트하라는 메서드 호출
+            toDoManager.updateToDo(newToDoData: toDoData) {
+                print("업데이트 완료")
+                
+                // 다시 이전화면으로 돌아가기
+                self.navigationController?.popViewController(animated: true)
+            }
         } else {
             // 기존에 데이터가 없을때 => 새로운 데이터 추가
             let memoText = mainTextView.text
+            
+            // 데이터가 없는 경우에는 새로운 데이터를 저장해야하니까
+            // 투두매니저(코어데이터매니저)한테 데이터를 저장하라는 메서드 호출
+            toDoManager.saveToDoData(toDoText: memoText, colorInt: temporaryNum ?? 1) {
+                print("저장 완료")
+                self.navigationController?.popViewController(animated: true)
+            }
+        }
+    }
+    
+    // 텍스트뷰, 저장(업데이트)버튼 색상 설정
+    func setupColorTheme(color: MyColor? = .red) {
+        backgroundView.backgroundColor = color?.viewColor
+        saveButton.backgroundColor = color?.buttonColor
+    }
+    
+    // 눌리지 않은 버튼은 연하게 표시하는 설정
+    func clearButtonColors() {
+        redButton.backgroundColor = MyColor.red.viewColor
+        redButton.setTitleColor(MyColor.red.buttonColor, for: .normal)
+        greenButton.backgroundColor = MyColor.green.viewColor
+        greenButton.setTitleColor(MyColor.green.buttonColor, for: .normal)
+        blueButton.backgroundColor = MyColor.blue.viewColor
+        blueButton.setTitleColor(MyColor.blue.buttonColor, for: .normal)
+        purpleButton.backgroundColor = MyColor.purple.viewColor
+        purpleButton.setTitleColor(MyColor.purple.buttonColor, for: .normal)
+    }
+    
+    // 눌린 버튼을 진하게 표시하는 설정
+    func setupColorButton(num: Int64) {
+        switch num {
+        case 1:
+            redButton.backgroundColor = MyColor.red.buttonColor
+            redButton.setTitleColor(.white, for: .normal)
+        case 2:
+            greenButton.backgroundColor = MyColor.green.buttonColor
+            greenButton.setTitleColor(.white, for: .normal)
+        case 3:
+            blueButton.backgroundColor = MyColor.blue.buttonColor
+            blueButton.setTitleColor(.white, for: .normal)
+        case 4:
+            purpleButton.backgroundColor = MyColor.purple.buttonColor
+            purpleButton.setTitleColor(.white, for: .normal)
+        default:
+            redButton.backgroundColor = MyColor.red.buttonColor
+            redButton.setTitleColor(.white, for: .normal)
         }
     }
     
