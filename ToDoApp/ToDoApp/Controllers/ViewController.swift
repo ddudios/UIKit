@@ -65,6 +65,23 @@ extension ViewController: UITableViewDataSource {
         cell.updateButtonPressed = { [weak self] (senderCell) in
             self?.performSegue(withIdentifier: "ToDetailView", sender: indexPath)
         }
+        cell.deleteButtonPressed = { [weak self] senderCell in
+            let alert = UIAlertController(title: "삭제하기", message: "복구할 수 없습니다.", preferredStyle: .alert)
+            let success = UIAlertAction(title: "삭제", style: .default) { action in
+                self?.toDoManager.removeToDo(data: senderCell.toDoData!) {
+                    tableView.reloadData()
+                }
+            }
+            
+            let cancel = UIAlertAction(title: "취소", style: .cancel) { cancel in
+                print("취소버튼이 눌렸습니다.")
+            }
+            
+            alert.addAction(success)
+            alert.addAction(cancel)
+            
+            self?.present(alert, animated: true, completion: nil)
+        }
         
         cell.selectionStyle = .none
         return cell

@@ -46,13 +46,30 @@
                                                                     <rect key="frame" x="0.0" y="99" width="323" height="30"/>
                                                                     <subviews>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="atQ-9i-cXg">
-                                                                            <rect key="frame" x="0.0" y="13" width="35.333333333333336" height="17"/>
+                                                                            <rect key="frame" x="262.66666666666669" y="4" width="35.333333333333314" height="26"/>
+                                                                            <constraints>
+                                                                                <constraint firstAttribute="height" constant="26" id="ewA-Hz-zNQ"/>
+                                                                            </constraints>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
+                                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OzJ-TF-oZ9">
+                                                                            <rect key="frame" x="303" y="3" width="20" height="26"/>
+                                                                            <constraints>
+                                                                                <constraint firstAttribute="width" constant="20" id="rMH-Gh-0ci"/>
+                                                                                <constraint firstAttribute="height" constant="26" id="vjn-He-mUy"/>
+                                                                            </constraints>
+                                                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="9"/>
+                                                                            <color key="tintColor" systemColor="systemRedColor"/>
+                                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                            <state key="normal" image="trash" catalog="system"/>
+                                                                            <connections>
+                                                                                <action selector="deleteButtonTapped:" destination="SIY-kC-yiA" eventType="touchUpInside" id="NEW-Ga-S2w"/>
+                                                                            </connections>
+                                                                        </button>
                                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j4c-lY-ysy">
-                                                                            <rect key="frame" x="253" y="4" width="70" height="26"/>
+                                                                            <rect key="frame" x="0.0" y="4" width="70" height="26"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="26" id="Vxb-cM-oxB"/>
                                                                                 <constraint firstAttribute="width" constant="70" id="eLG-2M-bo9"/>
@@ -68,11 +85,13 @@
                                                                     </subviews>
                                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <constraints>
+                                                                        <constraint firstItem="OzJ-TF-oZ9" firstAttribute="leading" secondItem="atQ-9i-cXg" secondAttribute="trailing" constant="5" id="Adr-lJ-vbI"/>
                                                                         <constraint firstAttribute="bottom" secondItem="atQ-9i-cXg" secondAttribute="bottom" id="I8u-76-QID"/>
                                                                         <constraint firstAttribute="bottom" secondItem="j4c-lY-ysy" secondAttribute="bottom" id="aWH-Wi-9UQ"/>
-                                                                        <constraint firstItem="atQ-9i-cXg" firstAttribute="leading" secondItem="T9d-oL-QEN" secondAttribute="leading" id="km2-7A-knf"/>
-                                                                        <constraint firstAttribute="trailing" secondItem="j4c-lY-ysy" secondAttribute="trailing" id="sLz-Z9-z3n"/>
+                                                                        <constraint firstAttribute="bottom" secondItem="OzJ-TF-oZ9" secondAttribute="bottom" constant="1" id="cDW-wO-Fsa"/>
+                                                                        <constraint firstAttribute="trailing" secondItem="OzJ-TF-oZ9" secondAttribute="trailing" id="u5x-1K-CfI"/>
                                                                         <constraint firstAttribute="height" constant="30" id="ufJ-4T-hLb"/>
+                                                                        <constraint firstItem="j4c-lY-ysy" firstAttribute="leading" secondItem="T9d-oL-QEN" secondAttribute="leading" id="xxz-AE-FSf"/>
                                                                     </constraints>
                                                                 </view>
                                                             </subviews>
@@ -264,6 +283,7 @@
     </scenes>
     <resources>
         <image name="pencil.tip" catalog="system" width="99" height="128"/>
+        <image name="trash" catalog="system" width="117" height="128"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
@@ -272,6 +292,9 @@
         </systemColor>
         <systemColor name="systemGray4Color">
             <color red="0.81960784310000001" green="0.81960784310000001" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemYellowColor">
             <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

@@ -25,6 +25,8 @@ class ToDoCell: UITableViewCell {
     // (델리게이트 대신에) 실행하고싶은 클로저를 저장
     // updateButtonPressed를 실행하면 Viewcontroller에서 전달된 클로저를 실행하는 방식으로 동작
     var updateButtonPressed: (ToDoCell) -> Void = { (sender) in }
+    var deleteButtonPressed: (ToDoCell) -> Void = {
+        (sender) in }
 
     // 스토리보드의 생성자
     override func awakeFromNib() {
@@ -59,4 +61,9 @@ class ToDoCell: UITableViewCell {
         // input파라미터를 ToDoCell타입으로 만들었으니까 self(ToDoCell)를 전달하면 된다
         updateButtonPressed(self)
     }
+    
+    @IBAction func deleteButtonTapped(_ sender: Any) {
+        deleteButtonPressed(self)
+    }
+    
 }
