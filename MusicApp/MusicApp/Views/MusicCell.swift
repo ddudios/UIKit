@@ -8,19 +8,26 @@
 import UIKit
 
 class MusicCell: UITableViewCell {
-
     @IBOutlet weak var mainImageView: UIImageView!
     @IBOutlet weak var songNameLabel: UILabel!
     @IBOutlet weak var artistNameLabel: UILabel!
     @IBOutlet weak var albumNameLabel: UILabel!
     @IBOutlet weak var releaseDateLabel: UILabel!
+    @IBOutlet weak var saveButton: UIButton!
     
     // 이미지 URL을 전달받는 속성
-    var imageUrl: String? {
+    var music: Music? {
         didSet {
-            loadImage()
+            configureUIWithData()
         }
     }
+    
+    // (델리게이트 대신에) 실행하고 싶은 클로저 저장
+    // 뷰컨트롤러에 있는 클로저 저장할 예정
+    // 셀 자신을 전달하고 저장여부(참/거짓)도 전달
+    // 저장여부에 따라 다른 Alert창
+    // 참(이미저장) -> 삭제Alert / 거짓(저장안되어있음) -> message입력 Alert
+    var saveButtonPressed: (MusicCell, Bool) -> Void = { (sender, pressed) in }
     
     // 셀이 재사용되기 전에 호출되는 메서드 (셀 재사용 준비)
     override func prepareForReuse() {
@@ -30,8 +37,40 @@ class MusicCell: UITableViewCell {
         self.mainImageView.image = nil
     }
     
-    func loadImage() {
-        guard let urlString = self.imageUrl, let url = URL(string: urlString) else { return }
+    // 스토리보드 또는 Nib으로 만들때, 사용하게 되는 생성자 메서드
+    override func awakeFromNib() {
+        saveButton.setImage(UIImage(systemName: "heart"), for: .normal)
+        saveButton.tintColor = .gray
+        mainImageView.contentMode = .scaleToFill
+    }
+    
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+        // Configure the view for the selected state
+    }
+    
+    func configureUIWithData() {
+        guard let music else { return }
+        loadImage(with: music.imageUrl)
+        songNameLabel.text = music.songName
+        artistNameLabel.text = music.artistName
+        albumNameLabel.text = music.albumName
+        releaseDateLabel.text = music.releaseDateString
+        setButtonStatus()
+    }
+    
+    @IBAction func saveButtonTapped(_ sender: UIButton) {
+        guard let isSaved = music?.isSaved else { return }
+        
+        // 뷰컨트롤로에서 전달받은 클로저를 실행 (내 자신 MusicCell/저장여부 전달하면서)
+        saveButtonPressed(self, isSaved)
+        
+        // 다시 저장 여부 셋팅
+        setButtonStatus()
+    }
+    
+    private func loadImage(with imageUrl: String?) {
+        guard let urlString = imageUrl, let url = URL(string: urlString) else { return }
         
         // 비동기 처리
         DispatchQueue.global().async {
@@ -48,6 +87,22 @@ class MusicCell: UITableViewCell {
             DispatchQueue.main.async {
                 self.mainImageView.image = UIImage(data: data)
             }
+        }
+    }
+    
+    func setButtonStatus() {
+        guard let isSaved = music?.isSaved else { return }
+        print("확인: \(isSaved)")
+        
+        // 저장이 되지 않았으면
+        if !isSaved {
+            saveButton.setImage(UIImage(systemName: "heart"), for: .normal)
+            saveButton.tintColor = .gray
+            
+            // 저장이 되어 있으면
+        } else {
+            saveButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+            saveButton.tintColor = .red
         }
     }
 }

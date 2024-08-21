@@ -19,6 +19,7 @@ public enum MusicApi {
 public struct Cell {
     static let musicCellIdentifier = "MusicCell"
     static let musicCollectionViewCellIdentifier = "MusicCollectionViewCell"
+    static let savedMusicCellIdentifier = "SavedMusicCell"
     private init() {}
 }
 

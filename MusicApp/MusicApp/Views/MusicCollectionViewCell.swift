@@ -32,6 +32,7 @@ class MusicCollectionViewCell: UICollectionViewCell {
             
             DispatchQueue.main.async {
                 self.mainImageView.image = UIImage(data: data)
+                self.mainImageView.contentMode = .scaleToFill
             }
         }
     }

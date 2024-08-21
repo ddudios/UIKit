@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="370" id="KGk-i7-Jjw" customClass="SavedMusicCell" customModule="MusicApp" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="370"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="370"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="KAf-md-wTj">
+                        <rect key="frame" x="20" y="10" width="100" height="100"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="100" id="2G1-Bb-Y6p"/>
+                            <constraint firstAttribute="height" constant="100" id="euL-7n-ydP"/>
+                        </constraints>
+                    </imageView>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="ZzY-i8-N3O">
+                        <rect key="frame" x="140" y="10" width="160" height="350"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gMA-9Y-ztf">
+                                <rect key="frame" x="0.0" y="0.0" width="160" height="17"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A1t-nU-y69">
+                                <rect key="frame" x="0.0" y="21" width="160" height="14.333333333333336"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aJt-1n-rPR">
+                                <rect key="frame" x="0.0" y="39.333333333333336" width="160" height="13.333333333333336"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DGE-hQ-Pzx">
+                                <rect key="frame" x="0.0" y="56.666666666666671" width="160" height="11"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="9"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bSy-4B-UcY">
+                                <rect key="frame" x="0.0" y="71.666666666666671" width="160" height="11"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="9"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="755" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r1Q-9W-MQY">
+                                <rect key="frame" x="0.0" y="86.666666666666671" width="160" height="229.33333333333331"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DNl-aG-eRp">
+                                <rect key="frame" x="0.0" y="320" width="160" height="30"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="olJ-HV-BN5">
+                                        <rect key="frame" x="130" y="0.0" width="30" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="6HK-Tu-fwp"/>
+                                            <constraint firstAttribute="width" constant="30" id="hEz-5b-otD"/>
+                                        </constraints>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" image="heart" catalog="system"/>
+                                        <connections>
+                                            <action selector="saveButtonTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="NOJ-h6-fpW"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Glm-Gq-7FH">
+                                        <rect key="frame" x="60" y="5" width="60" height="20"/>
+                                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="60" id="5tf-do-GjB"/>
+                                            <constraint firstAttribute="height" constant="20" id="8RK-Wa-sgt"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" title="UPDATE">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="updateButtonTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="nhG-1n-3af"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="olJ-HV-BN5" secondAttribute="bottom" id="Vpq-1v-yF1"/>
+                                    <constraint firstAttribute="trailing" secondItem="olJ-HV-BN5" secondAttribute="trailing" id="bPM-um-Nqp"/>
+                                    <constraint firstItem="olJ-HV-BN5" firstAttribute="leading" secondItem="Glm-Gq-7FH" secondAttribute="trailing" constant="10" id="eBb-Sa-ThP"/>
+                                    <constraint firstItem="Glm-Gq-7FH" firstAttribute="centerY" secondItem="DNl-aG-eRp" secondAttribute="centerY" id="lWn-BV-d8I"/>
+                                    <constraint firstAttribute="height" constant="30" id="uzY-c8-JtI"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                    </stackView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="ZzY-i8-N3O" firstAttribute="leading" secondItem="KAf-md-wTj" secondAttribute="trailing" constant="20" id="MHf-Jf-XEu"/>
+                    <constraint firstAttribute="trailing" secondItem="ZzY-i8-N3O" secondAttribute="trailing" constant="20" id="TCW-Wq-dHo"/>
+                    <constraint firstAttribute="bottom" secondItem="ZzY-i8-N3O" secondAttribute="bottom" constant="10" id="ZeI-7r-0yn"/>
+                    <constraint firstItem="KAf-md-wTj" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="eF0-Pr-dSI"/>
+                    <constraint firstItem="KAf-md-wTj" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="lZl-LF-hrg"/>
+                    <constraint firstItem="ZzY-i8-N3O" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="nzy-Ck-FiC"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="albumNameLabel" destination="aJt-1n-rPR" id="BZM-Se-E4o"/>
+                <outlet property="artistNameLabel" destination="A1t-nU-y69" id="NnU-sj-vCN"/>
+                <outlet property="commentMessageLabel" destination="r1Q-9W-MQY" id="4rw-yH-4F8"/>
+                <outlet property="mainImageView" destination="KAf-md-wTj" id="IeV-Mh-VBb"/>
+                <outlet property="releaseDateLabel" destination="DGE-hQ-Pzx" id="m4z-wR-xrN"/>
+                <outlet property="saveButton" destination="olJ-HV-BN5" id="oTW-i2-hoJ"/>
+                <outlet property="saveDateLabel" destination="bSy-4B-UcY" id="98G-je-8qD"/>
+                <outlet property="songNameLabel" destination="gMA-9Y-ztf" id="Px8-Gi-SKI"/>
+                <outlet property="updateButton" destination="Glm-Gq-7FH" id="f1N-c5-Taz"/>
+            </connections>
+            <point key="canvasLocation" x="138.93129770992365" y="32.394366197183103"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="heart" catalog="system" width="128" height="107"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

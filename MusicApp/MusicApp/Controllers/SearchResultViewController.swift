@@ -8,14 +8,16 @@
 import UIKit
 
 class SearchResultViewController: UIViewController {
-
     @IBOutlet weak var collectionView: UICollectionView!
+    
+    let searchController = UISearchController()
     
     // 컬렉션뷰의 레이아웃을 담당하는 객체 (컬렉션뷰의 모든 형태)
     let flowLayout = UICollectionViewFlowLayout()
     
     let networkMnanager = NetworkManager.shared
     var musicArray: [Music] = []
+    let musicManager = MusicManager.shared
     
     // (서치바에서) 검색을 위한 단어를 담는 변수 (전화면에서 전달받음)
     var searchTerm: String? {
@@ -27,7 +29,27 @@ class SearchResultViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupSearchBar()
         setupCollectionView()
+    }
+    
+    func setupSearchBar() {
+        
+        // 네비게이션 아이템에 서치바 세팅
+        self.title = "Search"
+        // 서치바를 감싸고 있는게 서치컨트롤러이기 때문에
+        // 네비게이션아이템에 있는 서치컨트롤러에 할당만 해주면 서치바가 생긴다
+        navigationItem.searchController = searchController
+        searchController.searchBar.placeholder = "Search Image"
+                
+        // 서치컨트롤러 사용시 설정
+        searchController.searchResultsUpdater = self
+        
+        // 항상 네비게이션 바에 검색창이 고정되도록 설정
+        navigationItem.hidesSearchBarWhenScrolling = false
+        
+        // 첫글자 대문자 설정 없애기
+        searchController.searchBar.autocapitalizationType = .none
     }
     
     func setupCollectionView() {
@@ -58,6 +80,7 @@ class SearchResultViewController: UIViewController {
         
         // 네트워킹 시작 전에 다시 빈배열로 만들기
         musicArray = []
+        print(searchTerm)
         
         networkMnanager.fetchMusic(searchTerm: searchTerm) { result in
             switch result {
@@ -70,6 +93,12 @@ class SearchResultViewController: UIViewController {
                 print(error.localizedDescription)
             }
         }
+        
+//        musicManager.fetchDataFromAPI(withTerm: searchTerm) {
+//            DispatchQueue.main.async {
+//                self.collectionView.reloadData()
+//            }
+//        }
     }
 }
 
@@ -77,13 +106,27 @@ extension SearchResultViewController: UICollectionViewDataSource {
     
     // 테이블뷰는 Row -> 컬렉션뷰는 Item
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return musicArray.count
+        return musicManager.getMusicArrayFromAPI().count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Cell.musicCollectionViewCellIdentifier, for: indexPath) as! MusicCollectionViewCell
-        cell.imageUrl = musicArray[indexPath.item].imageUrl
+        cell.imageUrl = musicManager.getMusicArrayFromAPI()[indexPath.item].imageUrl
         
         return cell
+    }
+}
+
+extension SearchResultViewController: UISearchResultsUpdating {
+    
+    // 유저가 글자를 입력하는 순간마다 호출되는 메서드
+    func updateSearchResults(for searchController: UISearchController) {
+        searchTerm = searchController.searchBar.text ?? ""
+        
+        musicManager.fetchDataFromAPI(withTerm: searchController.searchBar.text ?? "") {
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
+        }
     }
 }

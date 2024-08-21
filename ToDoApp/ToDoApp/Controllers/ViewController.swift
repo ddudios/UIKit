@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+final class ViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     // 모델(저장 데이터를 관리하는 코어데이터)

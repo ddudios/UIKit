@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ToDoCell: UITableViewCell {
+final class ToDoCell: UITableViewCell {
     @IBOutlet weak var backView: UIView!
     @IBOutlet weak var toDoTextLabel: UILabel!
     @IBOutlet weak var dateTextLabel: UILabel!
