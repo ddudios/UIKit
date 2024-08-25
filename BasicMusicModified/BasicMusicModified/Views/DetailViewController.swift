@@ -47,9 +47,9 @@ final class DetailViewController: UIViewController {
     
     func configureUI() {
         self.view.backgroundColor = .white
-        viewModel?.onCompleted = { albumImage in
+        viewModel?.onCompleted = { [weak self] albumImage in
             DispatchQueue.main.async {
-                self.mainImageView.image = albumImage
+                self?.mainImageView.image = albumImage
             }
         }
         self.songNameLabel.text = viewModel?.songNameString

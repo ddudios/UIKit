@@ -9,11 +9,11 @@ import UIKit
 
 final class ViewController: UIViewController {
     
-    // 일부로 싱글톤으로 안만듬 (APIService객체에 의존하게됨)
-    let apiManager = APIService()
+    // 일부로 싱글톤으로 안만듦 (APIService객체에 의존하게됨)
+//    let apiManager = APIService()
     
     // 데이터(모델) (일반적으로 뷰컨트롤러가 가지고 있음)
-    let viewModel = MusicViewModel()
+    var viewModel:  MusicViewModel!
 
     let albumNameLabel: UILabel = {
         let label = UILabel()
@@ -93,6 +93,7 @@ final class ViewController: UIViewController {
     }
     
     func setupUI() {
+        view.backgroundColor = .white
         startButton.isHidden = false
         nextButton.isHidden = true
     }

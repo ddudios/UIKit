@@ -13,10 +13,27 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
-        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
-        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        guard let _ = (scene as? UIWindowScene) else { return }
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+        
+        window = UIWindow(windowScene: windowScene)
+        
+        // ⭐️ 스토리보드 생성 + 조건을 만들어서 코드로 생성하기
+//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        // 네트워킹 객체 생성
+        let apiService = APIService()
+        
+        // ⭐️ 의존성 주입방식으로 네트워킹 객체 전달 (뷰모델 생성)
+        let musicVM = MusicViewModel(apiManager: apiService)
+        
+//        let firstVC = storyboard.instantiateViewController(withIdentifier: "ViewController") as! ViewController
+        let firstVC = ViewController()
+        
+        // 뷰모델 전달
+        firstVC.viewModel = musicVM
+        
+        window?.rootViewController = firstVC
+        window?.makeKeyAndVisible()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

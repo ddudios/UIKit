@@ -8,9 +8,8 @@
 import UIKit
 
 final class DetailViewModel {
-    
+    var apiManager: NetworkType
     var music: Music?
-    var apiManager = APIService()
     
     // 변화에 따라 할당
     var imageUrl: String? {
@@ -34,4 +33,7 @@ final class DetailViewModel {
     
     var onCompleted: (UIImage?) -> () = { _ in }
     
+    init(apiManager: NetworkType) {
+        self.apiManager = apiManager
+    }
 }
