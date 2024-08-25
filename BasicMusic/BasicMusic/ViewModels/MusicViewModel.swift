@@ -8,7 +8,7 @@
 import Foundation
 
 // ViewModel이 Model(데이터)을 가지는게 MVVM의 핵심
-class MusicViewModel {
+final class MusicViewModel {
     
     // ⭐️ 핵심 데이터(모델): 뷰모델이 가지고 있음
     // Model: 실질적인 데이터를 가지고 있음
@@ -16,14 +16,14 @@ class MusicViewModel {
         didSet {
             // 데이터가 담긴 시점에 didSet을 통해서 클로저를 호출하니까 클로저한테 시점을 알려준다
             // ViewController에서 클로저에 할일 할당
-            onCompleted()
+            onCompleted(music)
         }
     }
     
     // 함수를 담을 수 있는 변수 생성
     // 옵셔널 타입으로 선언해도되고 기본함수를 담아놓아도 된다
 //    var onCompleted: (() -> ())?
-    var onCompleted: () -> () = {}
+    var onCompleted: (Music?) -> () = { _ in }
     
     // Output:
     // View가 가져야될 데이터의 모습들과 밀접하게 연관시키고
@@ -43,6 +43,8 @@ class MusicViewModel {
     // 버튼이 눌렸을때 어떻게 다룰지에 대한 메서드
     // View에서 버튼이 눌렸다를 전달받음
     func handleButtonTapped() {
+        
+        // 네트워킹 메서드 호출
         fetchMusic { [unowned self] result in
             switch result {
             case .success(let music):
@@ -92,5 +94,17 @@ class MusicViewModel {
                 completion(.failure(.parseError))
             }
         }.resume()
+    }
+    
+    // 다음화면을 위한 뷰모델을 생성할 수 있는 메서드 생성
+    func getDetailViewModel() -> DetailViewModel {
+        // 다음화면의 뷰모델 생성
+        let detailVM = DetailViewModel()
+        
+        // 데이터 전달
+        detailVM.music = self.music
+        detailVM.imageUrl = self.music?.imageUrl
+        
+        return detailVM
     }
 }

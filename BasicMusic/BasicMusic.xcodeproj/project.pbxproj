@@ -16,6 +16,7 @@
 		B00211182C77A6540096B6FC /* Music.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00211172C77A6540096B6FC /* Music.swift */; };
 		B065B3082C77CE4800718A52 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B065B3072C77CE4800718A52 /* DetailViewController.swift */; };
 		B0767DEC2C79CFCA00958793 /* MusicViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0767DEB2C79CFCA00958793 /* MusicViewModel.swift */; };
+		B0767DF12C7B420500958793 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0767DF02C7B420500958793 /* DetailViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		B00211172C77A6540096B6FC /* Music.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Music.swift; sourceTree = "<group>"; };
 		B065B3072C77CE4800718A52 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		B0767DEB2C79CFCA00958793 /* MusicViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicViewModel.swift; sourceTree = "<group>"; };
+		B0767DF02C7B420500958793 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +98,7 @@
 			isa = PBXGroup;
 			children = (
 				B0767DEB2C79CFCA00958793 /* MusicViewModel.swift */,
+				B0767DF02C7B420500958793 /* DetailViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -173,6 +176,7 @@
 			files = (
 				B0767DEC2C79CFCA00958793 /* MusicViewModel.swift in Sources */,
 				B00211052C779FCE0096B6FC /* ViewController.swift in Sources */,
+				B0767DF12C7B420500958793 /* DetailViewModel.swift in Sources */,
 				B00211012C779FCE0096B6FC /* AppDelegate.swift in Sources */,
 				B065B3082C77CE4800718A52 /* DetailViewController.swift in Sources */,
 				B00211032C779FCE0096B6FC /* SceneDelegate.swift in Sources */,
