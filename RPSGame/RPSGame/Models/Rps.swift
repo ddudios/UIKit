@@ -7,7 +7,7 @@
 
 import UIKit
 
-enum Rps: Int {
+enum Rps: CaseIterable {
     case ready
     case rock
     case paper
