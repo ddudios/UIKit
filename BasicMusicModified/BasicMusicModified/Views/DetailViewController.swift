@@ -7,7 +7,9 @@
 
 import UIKit
 
-class DetailViewController: UIViewController {
+final class DetailViewController: UIViewController {
+    
+    var viewModel: DetailViewModel?
     
     let mainImageView: UIImageView = {
         let imageView = UIImageView()
@@ -37,10 +39,6 @@ class DetailViewController: UIViewController {
         return button
     }()
     
-    var apiManager: APIService?
-    var imageUrl: String?
-    var songName: String?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
@@ -49,12 +47,12 @@ class DetailViewController: UIViewController {
     
     func configureUI() {
         self.view.backgroundColor = .white
-        self.songNameLabel.text = self.songName
-        apiManager?.loadImage(imageUrl: imageUrl) { image in
+        viewModel?.onCompleted = { albumImage in
             DispatchQueue.main.async {
-                self.mainImageView.image = image
+                self.mainImageView.image = albumImage
             }
         }
+        self.songNameLabel.text = viewModel?.songNameString
     }
     
     func setupAutoLayout() {

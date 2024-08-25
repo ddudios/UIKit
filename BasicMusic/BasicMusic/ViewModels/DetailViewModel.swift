@@ -31,6 +31,8 @@ final class DetailViewModel {
     
     var onCompleted: (UIImage?) -> () = { _ in }
     
+    // Input (데이터를 변하게하기 위한 로직)
+    
     // Logic: 기타 순수 로직 등
     func loadImage() {
         // 옵셔널바인딩해서 URL구조체 만들고

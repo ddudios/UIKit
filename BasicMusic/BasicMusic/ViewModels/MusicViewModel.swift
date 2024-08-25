@@ -40,6 +40,7 @@ final class MusicViewModel {
         return music?.artistName
     }
     
+    // Input: 데이터를 변하게 하기위한 로직
     // 버튼이 눌렸을때 어떻게 다룰지에 대한 메서드
     // View에서 버튼이 눌렸다를 전달받음
     func handleButtonTapped() {

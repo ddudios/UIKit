@@ -25,8 +25,8 @@ final class DetailViewController: UIViewController {
     }
     
     func configureUI() {
-        self.viewModel.onCompleted = { [unowned self] albumImage in
-                self.mainImageView.image = albumImage
+        self.viewModel.onCompleted = { [weak self] albumImage in
+                self?.mainImageView.image = albumImage
         }
         self.songNameLabel.text = self.viewModel.songNameString
     }

@@ -8,6 +8,12 @@
 import UIKit
 
 final class ViewController: UIViewController {
+    
+    // 일부로 싱글톤으로 안만듬 (APIService객체에 의존하게됨)
+    let apiManager = APIService()
+    
+    // 데이터(모델) (일반적으로 뷰컨트롤러가 가지고 있음)
+    let viewModel = MusicViewModel()
 
     let albumNameLabel: UILabel = {
         let label = UILabel()
@@ -76,23 +82,14 @@ final class ViewController: UIViewController {
         stview.translatesAutoresizingMaskIntoConstraints = false
         return stview
     }()
-    
-    // 일부로 싱글톤으로 안만듬 (APIService객체에 의존하게됨)
-    let apiManager = APIService()
-    
-    // 데이터(모델) (일반적으로 뷰컨트롤러가 가지고 있음)
-    var music: Music? {
-        didSet {
-            DispatchQueue.main.async {
-                self.configureUI()
-            }
-        }
-    }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         setupAutoLayout()
+        viewModel.onCompleted = {
+            self.configureUI()
+        }
     }
     
     func setupUI() {
@@ -102,11 +99,14 @@ final class ViewController: UIViewController {
     
     // 뮤직데이터를 화면에 표시
     func configureUI() {
-        self.albumNameLabel.text = self.music?.albumName
-        self.songNameLabel.text = self.music?.songName
-        self.artistNameLabel.text = self.music?.artistName
-        self.startButton.isHidden = true
-        self.nextButton.isHidden = false
+        DispatchQueue.main.async {
+            self.albumNameLabel.text = self.viewModel.albumNameString()
+            self.songNameLabel.text = self.viewModel.songNameString()
+            self.artistNameLabel.text = self.viewModel.artistNameString()
+            
+            self.startButton.isHidden = true
+            self.nextButton.isHidden = false
+        }
     }
     
     func setupAutoLayout() {
@@ -128,36 +128,17 @@ final class ViewController: UIViewController {
     
     // 네트워킹 시작 (로직도 뷰컨트롤러가 가지고 있음)
     @objc func startButtonTapped() {
-        
-        // Result타입이니까 success, failure 케이스로 나눌 수 있다
-        apiManager.fetchMusic { [unowned self] result in
-            switch result {
-                
-                // success케이스일 때 바인딩해서 뮤직을 받아서 저장한다
-            case .success(let music):
-                self.music = music
-            case .failure(.dataError):
-                print("데이터 에러")
-            case .failure(.networkingError):
-                print("네트워킹 에러")
-            case .failure(.parseError):
-                print("파싱 에러")
-            }
-        }
+        viewModel.handleButtonTapped()
     }
     
     @objc func nextButtonTapped() {
-        guard let music = self.music else { return }
+        guard viewModel.music != nil else { return }
         
+        var detailVM = viewModel.getDetailViewModel()
         let detailVC = DetailViewController()
+        detailVC.viewModel = detailVM
+        
         detailVC.modalPresentationStyle = .fullScreen
-        
-        // 네트워킹 매니저 전달 (힙 주소 복사해서 전달)
-        detailVC.apiManager = self.apiManager
-        
-        detailVC.imageUrl = music.imageUrl
-        detailVC.songName = music.songName
-        
         self.present(detailVC, animated: true)
     }
     
