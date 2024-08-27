@@ -23,49 +23,50 @@ final class ViewController: UIViewController {
     @IBOutlet weak var selectButton: UIButton!
     @IBOutlet weak var resetButton: UIButton!
     
-    // 가위바위보 게임(비즈니스 로직)관리를 위한 인스턴스
-    var rpsManager = RPSManager()
+    // [MVC] 가위바위보 게임(비즈니스 로직)관리를 위한 인스턴스
+//    var rpsManager = RPSManager()
+    // [MVVM]
+    var viewModel = RPSViewModel(rpsManager: RPSManager())
     
     // 데이터를 뷰컨트롤러가 소유
     // 데이터 저장을 위한 변수 (컴퓨터 선택/나의 선택)
-    var comChoice: Rps = Rps.allCases[Int.random(in: 1...3)]
-    var myChoice: Rps = .ready
+//    var comChoice: Rps = Rps.allCases[Int.random(in: 1...3)]
+//    var myChoice: Rps = .ready
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        getReady()
-        buttonEnabled(resetButton, enabled: false)
+        // 변하는 시점을 전달받기 위한 클로저
+        viewModel.onCompleted = { [unowned self] resultString in
+            self.mainLabel.text = resultString
+            self.comImageView.image = self.viewModel.comRPSimage
+            self.comChoiceLabel.text = self.viewModel.comRPStext
+            self.myImageView.image = self.viewModel.userRPSimage
+            self.myChoiceLabel.text = self.viewModel.userRPStext
+        }
+        viewModel.reset()
         
-        if myChoice == Rps.ready {
+        buttonEnabled(resetButton, enabled: false)
+        if mainLabel.text == "선택하세요" {
             buttonEnabled(selectButton, enabled: false)
         }
     }
 
     @IBAction func rpsButtonTapped(_ sender: UIButton) {
-        // 가위/바위/보를 선택해서 그 정보를 저장해야 됨
-        // 가위바위보중 하나를 선택하면 현재의 타이틀을 가져와서
-        guard let title = sender.currentTitle else { return }
-        // 메서드를 호출하면 열거형 타입중에 하나의 케이스가 결과로 나온 것을 담는다
-        myChoice = selectedRPS(withString: title)
+        
+        // 버튼이 눌렸다는 것을 뷰모델한테 전달 (간단)
+        viewModel.rpsButtonTapped()
         
         buttonEnabled(selectButton, enabled: true)
+        
+        // 가위/바위/보 타이틀 전달
+        guard let title = sender.currentTitle else { return }
+        viewModel.userGetSelected(title: title)
     }
     
-    // 버튼을 눌렀을때 rpsManager한테 비교 결과를 받아와서 레이블에 표시
+    // 버튼이 눌린것만 뷰모델한테 전달
     @IBAction func selectButtonTapped(_ sender: UIButton) {
-        // 1) 컴퓨터가 랜덤 선택한 것을 이미지뷰에 표시
-        // 2) 컴퓨터가 랜덤 선택한 것을 레이블에 표시
-        comImageView.image = comChoice.rpsInfo.image
-        comChoiceLabel.text = comChoice.rpsInfo.name
-        
-        // 3) 내가 선택한 것을 이미지 뷰에 표시
-        // 4) 내가 선택한 것을 레이블에 표시
-        myImageView.image = myChoice.rpsInfo.image
-        myChoiceLabel.text = myChoice.rpsInfo.name
-        
-        // 5) 컴퓨터가 선택한 것과 내가 선택한 것을 비교해서 이겼는지/졌는지 판단해서 표시
-        mainLabel.text = rpsManager.getRpsResult(comChoice: self.comChoice, myChoice: self.myChoice)
+        viewModel.selectButtonTapped()
         
         buttonEnabled(myChoiceButton1, enabled: false)
         buttonEnabled(myChoiceButton2, enabled: false)
@@ -74,9 +75,10 @@ final class ViewController: UIViewController {
         buttonEnabled(resetButton, enabled: true)
     }
     
+    // 버튼이 눌린것만 뷰모델한테 전달
     @IBAction func resetButtonTapped(_ sender: UIButton) {
-        getReady()
-        comChoice = Rps.allCases[Int.random(in: 1...3)]
+        viewModel.reset()
+        
         buttonEnabled(myChoiceButton1, enabled: true)
         buttonEnabled(myChoiceButton2, enabled: true)
         buttonEnabled(myChoiceButton3, enabled: true)
@@ -100,6 +102,7 @@ final class ViewController: UIViewController {
         }
     }
     
+    /** MVC
     // 아래 코드들은 RPSManager에 넣어도 된다
     // 본인이 생각하는 기준에 따라서 만들면 된다
     
@@ -120,16 +123,5 @@ final class ViewController: UIViewController {
     }
     
     // 가위바위보 선택
-    func selectedRPS(withString name: String) -> Rps {
-        switch name {
-        case "가위":
-            return Rps.scissors
-        case "바위":
-            return Rps.rock
-        case "보":
-            return Rps.paper
-        default:
-            return Rps.ready
-        }
-    }
+     **/
 }
