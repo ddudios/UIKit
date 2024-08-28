@@ -17,7 +17,6 @@
 		B0FCA2902C673D4C007EF69E /* MemberListManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0FCA28F2C673D4C007EF69E /* MemberListManager.swift */; };
 		B0FCA2922C674789007EF69E /* MyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0FCA2912C674789007EF69E /* MyTableViewCell.swift */; };
 		B0FCA2942C67AFD6007EF69E /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0FCA2932C67AFD6007EF69E /* DetailViewController.swift */; };
-		B0FCA2962C67B19E007EF69E /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0FCA2952C67B19E007EF69E /* DetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,7 +32,6 @@
 		B0FCA28F2C673D4C007EF69E /* MemberListManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberListManager.swift; sourceTree = "<group>"; };
 		B0FCA2912C674789007EF69E /* MyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTableViewCell.swift; sourceTree = "<group>"; };
 		B0FCA2932C67AFD6007EF69E /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
-		B0FCA2952C67B19E007EF69E /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,7 +90,6 @@
 			isa = PBXGroup;
 			children = (
 				B0FCA2912C674789007EF69E /* MyTableViewCell.swift */,
-				B0FCA2952C67B19E007EF69E /* DetailView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -178,7 +175,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B0FCA2902C673D4C007EF69E /* MemberListManager.swift in Sources */,
-				B0FCA2962C67B19E007EF69E /* DetailView.swift in Sources */,
 				B09D34FD2C64E6480092BBEA /* ViewController.swift in Sources */,
 				B09D34F92C64E6480092BBEA /* AppDelegate.swift in Sources */,
 				B09D34FB2C64E6480092BBEA /* SceneDelegate.swift in Sources */,
