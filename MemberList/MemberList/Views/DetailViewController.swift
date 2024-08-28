@@ -8,6 +8,7 @@
 import UIKit
 import PhotosUI
 
+// 많은 로직들을 뷰모델한테 전달했기 때문에 간단해졌다
 final class DetailViewController: UIViewController {
     
     // MARK: - UI구현
@@ -37,7 +38,7 @@ final class DetailViewController: UIViewController {
         return label
     }()
     
-    let memberIdTextField: UITextField = {
+    lazy var memberIdTextField: UITextField = {
         let tf = UITextField()
         tf.frame.size.height = 22
         tf.textColor = .black
@@ -47,6 +48,7 @@ final class DetailViewController: UIViewController {
         tf.spellCheckingType = .no
         tf.clearsOnBeginEditing = false
         tf.translatesAutoresizingMaskIntoConstraints = false
+        tf.delegate = self
         return tf
     }()
     
@@ -107,6 +109,7 @@ final class DetailViewController: UIViewController {
         tf.autocapitalizationType = .none
         tf.autocorrectionType = .no
         tf.spellCheckingType = .no
+        tf.keyboardType = .numberPad
         tf.clearsOnBeginEditing = false
         tf.translatesAutoresizingMaskIntoConstraints = false
         return tf
@@ -210,13 +213,25 @@ final class DetailViewController: UIViewController {
     // 애니메이션을 적용하기 위한 저장 속성
     var stackViewTopConstraints: NSLayoutConstraint!
     
-    // 대리자 역할을 할 수 있는 변수 생성
-    // DetailViewController의 대리자는
-    // MemberDelegate프로토콜을 채택한 타입만 가능하다
-    weak var delegate: MemberDelegate?
+    // MVC: 모델을 가짐
+    //var member: Member?
     
-    var member: Member?
-
+    // MVVM: 뷰모델을 가짐
+    var viewModel: MemberViewModel
+    
+    // 생성자 - 뷰모델 주입
+    // 스토리보드가 아닌 코드로 작성했을때 필요한 생성자 구현
+    init(viewModel: MemberViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    //MARK: - 라이프사이클
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
@@ -232,19 +247,13 @@ final class DetailViewController: UIViewController {
     }
     
     func setupMemberUI() {
-        guard var member else {
-            updateButton.setTitle("SAVE", for: .normal)
-            memberIdTextField.text = "\(Member.memberNumbers)"
-            return
-        }
-        
-        mainImageView.image = member.memberImage
-        memberIdTextField.text = "\(member.memberId)"
-        nameTextField.text = member.name
-        phoneTextField.text = member.phone
-        addressTextField.text = member.address
-        
-        ageTextField.text = member.age != nil ? "\(member.age!)" : ""
+        memberIdTextField.text = viewModel.idString
+        mainImageView.image = viewModel.memberImage
+        nameTextField.text = viewModel.nameString
+        ageTextField.text = viewModel.ageString
+        phoneTextField.text = viewModel.phoneString
+        addressTextField.text = viewModel.addressString
+        updateButton.setTitle(viewModel.buttonTitle, for: .normal)
     }
     
     // MARK: - 오토레이아웃 설정
@@ -332,40 +341,26 @@ final class DetailViewController: UIViewController {
         }
     }
     
+    //MARK: - SAVE버튼 또는 UPDATE버튼이 눌렸을때의 동작
+    
     @objc func updateButtonTapped() {
         
-        // 멤버가 없다면 (새로운 멤버 추가 화면)
-        if member == nil {
-            let name = self.nameTextField.text ?? ""
-            let age = Int(self.ageTextField.text ?? "")
-            let phone = self.phoneTextField.text ?? ""
-            let address = self.addressTextField.text ?? ""
-            
-            var newMemeber = Member(name: name, age: age, phone: phone, address: address)
-            newMemeber.memberImage = self.mainImageView.image
-            
-            delegate?.addNewMember(newMemeber)
-            
-        // 멤버가 있다면 (멤버의 내용 업데이트: 원래의 데이터가 있을 테니까)
-        } else {
-            
-            // 디테일뷰의 이미지를 멤버에 저장
-            member?.memberImage = self.mainImageView.image
-            
-            // 디테일뷰의 텍스트필드 내용을 멤버에 저장 -> 전달받은 멤버의 데이터 변경
-            // memberId는 member모델에 업데이트할 때 몇번째 멤버인지 인덱스 역할을 위해 저장 속성 생성
-            // non-optional타입만 형변환 가능
-            let memberId = Int(self.memberIdTextField.text!) ?? 0
-            member?.name = self.nameTextField.text ?? ""
-            member?.age = Int(self.ageTextField.text!) ?? 0
-            member?.phone = self.phoneTextField.text ?? ""
-            member?.address = self.addressTextField.text ?? ""
-            
-            // 델리게이트 방식으로 구현
-            // 대리자의 메서드 호출
-            delegate?.update(index: memberId, member!)
+        guard nameTextField.text != "", ageTextField.text != "" else {
+            if nameTextField.text == "" {
+                nameLable.textColor = .red
+            } else {
+                nameLable.textColor = .black
+            }
+            if ageTextField.text == "" {
+                ageLable.textColor = .red
+            } else {
+                ageLable.textColor = .black
+            }
+            return
         }
-        self.navigationController?.popViewController(animated: true)
+        
+        viewModel.handleButtonTapped(image: mainImageView.image, name: nameTextField.text, age: ageTextField.text, phone: phoneTextField.text, address: addressTextField.text)
+        viewModel.backToBeforeVC(fromeCurrentVC: self, animated: true)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -391,6 +386,8 @@ extension DetailViewController: UITextFieldDelegate {
         return true
     }
 }
+
+//MARK: - 피커뷰 델리게이트
 
 extension DetailViewController: PHPickerViewControllerDelegate {
     

@@ -9,12 +9,23 @@ import UIKit
 
 class MyTableViewCell: UITableViewCell {
     
-    var member: Member? {
+    // 멤버 저장속성 구현
+    // 멤버를 가지는게 아니라
+//    var member: Member? {
+//        didSet {
+//            guard var member else { return }
+//            mainImageView.image = member.memberImage
+//            memberNameLabel.text = member.name
+//            addressLabel.text = member.address
+//        }
+//    }
+    
+    // MARK: - 뷰모델
+    
+    // 해당 뷰를 그릴 수 있는 뷰모델을 가진다
+    var viewModel: MemberViewModel! {
         didSet {
-            guard var member else { return }
-            mainImageView.image = member.memberImage
-            memberNameLabel.text = member.name
-            addressLabel.text = member.address
+            configureUI()
         }
     }
     
@@ -51,11 +62,13 @@ class MyTableViewCell: UITableViewCell {
         return sv
     }()
     
-    // 생성자
+    // MARK: - 생성자
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
         
         addSubviews()
+        setupConstraints()
 //        mainImageView.image = member?.memberImage
 //        memberNameLabel.text = member?.name
 //        addressLabel.text = member?.address
@@ -66,37 +79,20 @@ class MyTableViewCell: UITableViewCell {
     }
     
     func addSubviews() {
-        self.addSubview(mainImageView)
-        self.addSubview(labelStackView)
-        
+        self.contentView.addSubview(mainImageView)
+        self.contentView.addSubview(labelStackView)
         labelStackView.addArrangedSubview(memberNameLabel)
         labelStackView.addArrangedSubview(addressLabel)
     }
     
     // MARK: - 오토레이아웃 셋팅
     
-    // 오토레이아웃을 업데이트하는 정확한 시점
-    override func updateConstraints() {
-        setupConstraints()
-        
-        super.updateConstraints()
-    }
-    
-    // 프레임에 대한 넓이가 정확히 재계산되는 시점
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        // 이 시점에 정확한 프레임 넓이를 얻어서 이미지뷰 수정
-        self.mainImageView.clipsToBounds = true
-        self.mainImageView.layer.cornerRadius = self.mainImageView.frame.width / 2
-    }
-    
     func setupConstraints() {
         NSLayoutConstraint.activate([
             mainImageView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 10),
-            // contentView는 UITableViewCell의 하위 뷰로, 셀의 컨텐츠를 담는 주요 영역입니다.
+            // contentView는 UITableViewCell의 하위 뷰로, 셀의 컨텐츠를 담는 주요 영역
             // 사용자 정의 컨텐츠(라벨, 이미지 등)를 추가할 때는 contentView에 추가하는 것이 일반적
-            // 하지만, contentView의 높이와 위치는 셀의 전체 높이와 완전히 동일하지 않을 수 있습니다.
+            // 하지만, contentView의 높이와 위치는 셀의 전체 높이와 완전히 동일하지 않을 수 있다
             // self에 맞추면 이미지 뷰가 셀의 전체 중앙에 맞춰진다
             mainImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             mainImageView.heightAnchor.constraint(equalToConstant: 40),
@@ -109,5 +105,23 @@ class MyTableViewCell: UITableViewCell {
             labelStackView.topAnchor.constraint(equalTo: self.mainImageView.topAnchor),
             labelStackView.bottomAnchor.constraint(equalTo: self.mainImageView.bottomAnchor)
         ])
+    }
+    
+    // MARK: - 레이아웃 셋팅 (자동)
+    
+    // 프레임에 대한 넓이가 정확히 재계산되는 시점
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        // 이 시점에 정확한 프레임 넓이를 얻어서 이미지뷰 수정
+        self.mainImageView.clipsToBounds = true
+        self.mainImageView.layer.cornerRadius = self.mainImageView.frame.width / 2
+    }
+    
+    // MARK: - 뷰모델을 가지고 뷰 셋팅
+    func configureUI() {
+        mainImageView.image = viewModel.memberImage
+        memberNameLabel.text = viewModel.nameString
+        addressLabel.text = viewModel.addressString
     }
 }

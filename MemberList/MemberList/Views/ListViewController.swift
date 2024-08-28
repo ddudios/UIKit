@@ -7,17 +7,26 @@
 
 import UIKit
 
-final class ViewController: UIViewController {
+final class ListViewController: UIViewController {
     
     // 테이블뷰 생성
     private let tableView = UITableView()
     
-    let memberListManager = MemberListManager()
+    var viewModel: MemberListViewModel
     
     lazy var plusButton: UIBarButtonItem = {
         let button = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(plusButtonTapped))
         return button
     }()
+    
+    init(viewModel: MemberListViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,18 +35,19 @@ final class ViewController: UIViewController {
         view.backgroundColor = .white
         
         setupNavigationBar()
-        setupData()
         setupTableView()
         setupTableViewConstraints()
+        
+        // 데이터 생성은 뷰모델에 위임 (자체적으로 생성자에서 하도록)
     }
     
-    // 커스텀 델리게이트에서 설정해줬기 때문에 필요없음
-//    override func viewWillAppear(_ animated: Bool) {
-//        tableView.reloadData()  // tableView refresh
-//    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()  // tableView refresh
+    }
     
     func setupNavigationBar() {
-        title = "회원 목록"
+        title = viewModel.title
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
         appearance.backgroundColor = .white
@@ -48,20 +58,17 @@ final class ViewController: UIViewController {
         self.navigationItem.rightBarButtonItem = self.plusButton
     }
     
-    func setupData() {
-        memberListManager.makeMemberListDatas()
-    }
+    //MARK: - 테이블뷰 셋팅
     
     func setupTableView() {
         tableView.dataSource = self
         tableView.delegate = self
-        
-        tableView.backgroundColor = .white
         tableView.rowHeight = 60
         tableView.register(MyTableViewCell.self, forCellReuseIdentifier: "MemberCell")
     }
     
-    // 테이블뷰 오토레이아웃 설정
+    //MARK: - 테이블뷰 오토레이아웃 셋팅
+    
     func setupTableViewConstraints() {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(tableView)
@@ -74,62 +81,45 @@ final class ViewController: UIViewController {
     }
     
     @objc func plusButtonTapped() {
-        let detailVC = DetailViewController()
-        detailVC.delegate = self
-        navigationController?.pushViewController(detailVC, animated: true)
+        viewModel.handleNextVC(nil, fromCurrentVC: self, animated: true)
     }
 }
 
+//MARK: - 테이블뷰 데이터 소스 구현
+
 // 테이블뷰 셀 형태 설정
-extension ViewController: UITableViewDataSource {
+extension ListViewController: UITableViewDataSource {
+    
+    // 섹션에 대한 Row가 몇개인지를 판별
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return memberListManager.getMemberList().count
+        // 몇번째 섹션인지 전달받으면 몇개인지 세는 코드를 뷰모델에 구현
+        // 뷰컨트롤러를 비대해지지 않게 만듦
+        return viewModel.numberOfRowsInSection(section)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MemberCell", for: indexPath) as! MyTableViewCell
         
-//        cell.mainImageView.image = memberListManager[indexPath.row].memberImage
-//        cell.memberNameLabel.text = memberListManager[indexPath.row].name
-//        cell.addressLabel.text = memberListManager[indexPath.row].address
-        cell.member = memberListManager[indexPath.row]
-        cell.selectionStyle = .none
+        // 셀을 그릴때 MVC패턴에서는 멤버를 직접적으로 전달
+//        cell.member = memberListManager[indexPath.row]
         
+        // MVVM에서는 뷰모델 전달
+        // 뷰모델을 꺼내올 수 있는 로직:
+        // - 몇번째인지 index를 전달하면 해당 뷰모델 리턴해서 전달
+        cell.viewModel = viewModel.memberViewModelAtIndex(indexPath.row)
+        cell.selectionStyle = .none
         return cell
     }
 }
 
-extension ViewController: UITableViewDelegate {
+//MARK: - 테이블뷰 델리게이트 구현 (셀이 선택되었을때)
+
+extension ListViewController: UITableViewDelegate {
     
     // 셀이 눌렸을 때 동작
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let detailVC = DetailViewController()
-        detailVC.delegate = self
-        
-        let array = memberListManager.getMemberList()
-        detailVC.member = array[indexPath.row]
-        
-        // 네비게이션컨트롤러를 이용한 화면 이동
-        navigationController?.pushViewController(detailVC, animated: true)
-        // viewController: 이동할 다음 화면
-        // animated: 자연스럽게 넘어가려면 true
-    }
-}
-
-// 커스텀 델리게이트 채택
-extension ViewController: MemberDelegate {
-    func addNewMember(_ member: Member) {
-        
-        // 디테일뷰의 새로운 멤버 정보 -> 뷰컨트롤러가 전달받아서 -> 모델에 전달
-        memberListManager.makeNewMember(member)
-        
-        // 업데이트된 경우에 테이블뷰 리프레쉬
-        tableView.reloadData()
-    }
-    
-    func update(index: Int, _ member: Member) {
-        print(#function)
-        memberListManager.updateMember(index: index, member: member)
-        tableView.reloadData()
+        // MVC에서는 직접 Push
+        // MVVM에서는 뷰모델에게 위임 (로직)
+        viewModel.handleNextVC(indexPath.row, fromCurrentVC: self, animated: true)
     }
 }

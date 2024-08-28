@@ -7,11 +7,6 @@
 
 import UIKit
 
-protocol MemberDelegate: AnyObject {
-    func addNewMember(_ member: Member)
-    func update(index: Int, _ member: Member)
-}
-
 struct Member {
     // 멤버의 (절대적) 순서를 위한 타입 저장 속성
     static var memberNumbers: Int = 0
@@ -24,13 +19,14 @@ struct Member {
         return UIImage(named: "\(name).png") ?? UIImage(systemName: "person")
     }()
     
-    var memberId: Int
+    let memberId: Int
     var name: String?
     var age: Int?
     var phone: String?
     var address: String?
     
-    init(name: String? = nil, age: Int? = nil, phone: String? = nil, address: String? = nil) {
+    // 새롭게 생성할때
+    init(image: UIImage? = nil, name: String? = nil, age: Int? = nil, phone: String? = nil, address: String? = nil) {
                 
         // 자동 순번
         self.memberId = Member.memberNumbers
@@ -43,5 +39,16 @@ struct Member {
         
         // 인스턴스 생성시 증가
         Member.memberNumbers += 1
+    }
+    
+    // 기존 멤버 업데이트 할때
+    init(exitingMember: Member, image: UIImage? = nil, name: String? = nil, age: Int? = nil, phone: String? = nil, address: String? = nil) {
+        self = exitingMember
+        
+        self.memberImage = image
+        self.name = name
+        self.age = age
+        self.phone = phone
+        self.address = address
     }
 }

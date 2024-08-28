@@ -7,8 +7,20 @@
 
 import Foundation
 
-final class MemberListManager {
+protocol MemberListType {
+    func makeMemberListDatas()
+    func getMemberList() -> [Member]
+    func makeNewMember(_ newMember: Member)
+    func updateMember(index: Int, member: Member)
+    subscript(index: Int) -> Member { get set }
+}
+
+final class MemberListManager: MemberListType {
     private var membersList: [Member] = []
+    
+    init() {
+        makeMemberListDatas()
+    }
     
     func makeMemberListDatas() {
         membersList = [
