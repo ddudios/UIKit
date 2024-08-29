@@ -17,6 +17,7 @@
 		B065B3082C77CE4800718A52 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B065B3072C77CE4800718A52 /* DetailViewController.swift */; };
 		B0767DEC2C79CFCA00958793 /* MusicViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0767DEB2C79CFCA00958793 /* MusicViewModel.swift */; };
 		B0767DF12C7B420500958793 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0767DF02C7B420500958793 /* DetailViewModel.swift */; };
+		B0CE5E9E2C80BB6C00D82C21 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CE5E9D2C80BB6C00D82C21 /* APIService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		B065B3072C77CE4800718A52 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		B0767DEB2C79CFCA00958793 /* MusicViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicViewModel.swift; sourceTree = "<group>"; };
 		B0767DF02C7B420500958793 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
+		B0CE5E9D2C80BB6C00D82C21 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,7 @@
 			children = (
 				B00211002C779FCE0096B6FC /* AppDelegate.swift */,
 				B00211022C779FCE0096B6FC /* SceneDelegate.swift */,
+				B0CE5E9C2C80BB5400D82C21 /* APIService */,
 				B00211162C77A0070096B6FC /* Models */,
 				B00211152C77A0000096B6FC /* Views */,
 				B0767DED2C79CFCD00958793 /* ViewModels */,
@@ -101,6 +104,14 @@
 				B0767DF02C7B420500958793 /* DetailViewModel.swift */,
 			);
 			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		B0CE5E9C2C80BB5400D82C21 /* APIService */ = {
+			isa = PBXGroup;
+			children = (
+				B0CE5E9D2C80BB6C00D82C21 /* APIService.swift */,
+			);
+			path = APIService;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -180,6 +191,7 @@
 				B00211012C779FCE0096B6FC /* AppDelegate.swift in Sources */,
 				B065B3082C77CE4800718A52 /* DetailViewController.swift in Sources */,
 				B00211032C779FCE0096B6FC /* SceneDelegate.swift in Sources */,
+				B0CE5E9E2C80BB6C00D82C21 /* APIService.swift in Sources */,
 				B00211182C77A6540096B6FC /* Music.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

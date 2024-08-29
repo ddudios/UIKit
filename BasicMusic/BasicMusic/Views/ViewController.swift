@@ -24,7 +24,6 @@ final class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
 //        viewModel.onCompleted = {
 //            self.configureUI()
 //        }
@@ -32,22 +31,17 @@ final class ViewController: UIViewController {
         // 뷰모델에 접근하기 전에 무조건 필요 (생성)
         self.viewModel = MusicViewModel()
         
-        // 데이터 변경이 완료된 후 클로저에서 어떤 일을 할지 정의 (할당)
+        
+        // 데이터 변경이 완료된 후 클로저에서 어떤 일을 할지 정의
+        // 실행될 클로저를 다시 할당해서 뷰모델이 가지고있는 뮤직데이터가 바뀔때마다 이 클로저 실행
+        // 음악데이터가 바뀌는 1초마다 호출
         self.viewModel.onCompleted = { [unowned self] _ in
             DispatchQueue.main.async {
                 self.albumNameLabel.text = self.viewModel.albumNameString
                 self.songNameLabel.text = self.viewModel.songNameString
                 self.artistNameLabel.text = self.viewModel.artistNameString
-                
-                self.startButton.isHidden = true
-                self.nextButton.isHidden = false
             }
         }
-    }
-    
-    func setupUI() {
-        startButton.isHidden = false
-        nextButton.isHidden = true
     }
     
     // 뮤직데이터를 화면에 표시
@@ -68,7 +62,11 @@ final class ViewController: UIViewController {
     // [MVVM] ViewModel한테 버튼이 눌린걸 알려주기만 하면됨
     @IBAction func startButtonTapped(_ sender: UIButton) {
         // 네트워킹 시작
-        viewModel.handleButtonTapped()
+        viewModel.handleStartButtonTapped()
+    }
+    
+    @IBAction func stopButtonTapped(_ sender: UIButton) {
+        viewModel.handleStopButtonTapped()
     }
     
     // [MVC] 다음 화면에 필요한 데이터를 전달하고 그냥 다음 화면으로 가면 된다
