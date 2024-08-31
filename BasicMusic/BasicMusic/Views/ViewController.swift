@@ -24,37 +24,48 @@ final class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        viewModel.onCompleted = {
-//            self.configureUI()
-//        }
         
         // 뷰모델에 접근하기 전에 무조건 필요 (생성)
         self.viewModel = MusicViewModel()
         
-        
-        // 데이터 변경이 완료된 후 클로저에서 어떤 일을 할지 정의
-        // 실행될 클로저를 다시 할당해서 뷰모델이 가지고있는 뮤직데이터가 바뀔때마다 이 클로저 실행
-        // 음악데이터가 바뀌는 1초마다 호출
+        /** 기존에는 뷰모델이 가지고 있는 클로저에 할당
         self.viewModel.onCompleted = { [unowned self] _ in
             DispatchQueue.main.async {
                 self.albumNameLabel.text = self.viewModel.albumNameString
                 self.songNameLabel.text = self.viewModel.songNameString
                 self.artistNameLabel.text = self.viewModel.artistNameString
             }
-        }
+        }*
+        
+        // 받아온 music데이터를 가지고 클로저 나중에 호출
+        self.viewModel.music.나중에호출될수있는함수 = { [weak self] music in
+            DispatchQueue.main.async {
+                self?.albumNameLabel.text = music.albumName
+                self?.songNameLabel.text = music.songName
+                self?.artistNameLabel.text = music.artistName
+            }
+        }**/
+        // viewDidLoad에서 한번 호출은 해야함
+        // 왜냐하면 클래스로 감싸져있는 데이터의 클로저에다가 할일을 할당은 해야함
+        // 클로저를 할당해줘야지 뷰가 바뀔 수 있다
+        // music이 가지고 있는 데이터값이 바뀔때마다 클로저를 호출해야되니까 당연히 한번은 할당해줘야한다
+        bindViewModel()
     }
     
-    // 뮤직데이터를 화면에 표시
-//    func configureUI() {
-//        DispatchQueue.main.async {
-//            self.albumNameLabel.text = self.viewModel.albumNameString
-//            self.songNameLabel.text = self.viewModel.songNameString
-//            self.artistNameLabel.text = self.viewModel.artistNameString
-//            
-//            self.startButton.isHidden = true
-//            self.nextButton.isHidden = false
-//        }
-//    }
+    func bindViewModel() {
+        // 일반적으로 RXSwift에서는 메서드를 만들어놓는다
+        // 여기서의 music은 클래스로감싸진데이터라는 클래스이고 거기에 접근해서 사용
+        // 일반적으로 위에서 할당하는 것보다 조금 더 간단해보이도록 구현
+        // 둘은 완전히 똑같은 코드인데 바인딩하기라는 메서드를 한번 거쳐서
+        // 여기에 구현한 클로저를 나중에호출될수있는함수에 할당
+        self.viewModel.music.바인딩하기(콜백함수: { [weak self] music in
+            DispatchQueue.main.async {
+                self?.albumNameLabel.text = music.albumName
+                self?.songNameLabel.text = music.songName
+                self?.artistNameLabel.text = music.artistName
+            }
+        })
+    }
     
     // Input: 뷰에서 어떤 일이 발생했을때 전달
     // 인풋메서드 안에서는 데이터(Model)를 변형시키는 일을 한다
@@ -105,6 +116,3 @@ final class ViewController: UIViewController {
     }
     
 }
-
-// [MVC] 네트워킹 관련 함수도 뷰컨트롤러가 가지고 있음 (일반적으로 분리)
-//extension ViewController {}
