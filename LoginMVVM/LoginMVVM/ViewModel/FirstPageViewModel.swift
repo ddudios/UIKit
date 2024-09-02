@@ -23,7 +23,7 @@ final class FirstPageViewModel {
     
     // Logic ...
     
-    // MARK: - 얼럿
+    // MARK: - Alert (Logout)
     
     func logoutAlert(fromCurrentVC: UIViewController) {
         var message: String {

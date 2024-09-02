@@ -18,6 +18,8 @@
 		B092BA662C84433400618A9D /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B092BA652C84433400618A9D /* LoginViewModel.swift */; };
 		B092BA682C84434200618A9D /* FirstPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B092BA672C84434200618A9D /* FirstPageViewModel.swift */; };
 		B092BA6A2C845DC400618A9D /* FirstPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B092BA692C845DC400618A9D /* FirstPageViewController.swift */; };
+		B092BA6D2C848B7700618A9D /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B092BA6C2C848B7700618A9D /* Observable.swift */; };
+		B092BA6F2C848B8B00618A9D /* BindingTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = B092BA6E2C848B8B00618A9D /* BindingTextField.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +36,8 @@
 		B092BA652C84433400618A9D /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		B092BA672C84434200618A9D /* FirstPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstPageViewModel.swift; sourceTree = "<group>"; };
 		B092BA692C845DC400618A9D /* FirstPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstPageViewController.swift; sourceTree = "<group>"; };
+		B092BA6C2C848B7700618A9D /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
+		B092BA6E2C848B8B00618A9D /* BindingTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BindingTextField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +72,7 @@
 			children = (
 				B092BA492C8442B600618A9D /* AppDelegate.swift */,
 				B092BA4B2C8442B600618A9D /* SceneDelegate.swift */,
+				B092BA6B2C848B5F00618A9D /* Utils */,
 				B092BA602C8442F100618A9D /* Networking */,
 				B092BA5F2C8442E200618A9D /* Model */,
 				B092BA5E2C8442DA00618A9D /* ViewModel */,
@@ -112,6 +117,15 @@
 				B092BA612C84430000618A9D /* APIService.swift */,
 			);
 			path = Networking;
+			sourceTree = "<group>";
+		};
+		B092BA6B2C848B5F00618A9D /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				B092BA6C2C848B7700618A9D /* Observable.swift */,
+				B092BA6E2C848B8B00618A9D /* BindingTextField.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -189,8 +203,10 @@
 				B092BA4A2C8442B600618A9D /* AppDelegate.swift in Sources */,
 				B092BA682C84434200618A9D /* FirstPageViewModel.swift in Sources */,
 				B092BA662C84433400618A9D /* LoginViewModel.swift in Sources */,
+				B092BA6D2C848B7700618A9D /* Observable.swift in Sources */,
 				B092BA6A2C845DC400618A9D /* FirstPageViewController.swift in Sources */,
 				B092BA622C84430000618A9D /* APIService.swift in Sources */,
+				B092BA6F2C848B8B00618A9D /* BindingTextField.swift in Sources */,
 				B092BA4C2C8442B600618A9D /* SceneDelegate.swift in Sources */,
 				B092BA642C84430F00618A9D /* LoginResponse.swift in Sources */,
 			);

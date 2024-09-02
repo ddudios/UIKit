@@ -38,9 +38,10 @@ final class ViewController: UIViewController {
         return label
     }()
     
+    
     // 이메일 입력 텍스트 필드
     let emailTextField: UITextField = {
-        let tf = UITextField()
+        var tf = UITextField()
         tf.frame.size.height = 48
         tf.tintColor = .black
         tf.keyboardType = .emailAddress
@@ -77,8 +78,14 @@ final class ViewController: UIViewController {
     }()
     
     // 비밀번호 입력 필드
-    let passwordTextField: UITextField = {
-        let tf = UITextField()
+    // 아예 private lazy var emailTextField: 바인딩기능있는텍스트필드 = {
+    // 로 선언해도되지만 굳이 그렇게 하지않고
+    // 클로저내부에서 바인딩기능있는텍스트필드로 생성하고 업캐스팅해서 저장할 뿐이니까
+    // 그 내부에 구현한 기능이 없어지는게 아니라 메모리 위에는 어차피 바인딩기능있는텍스트필드가 올라가있다
+    // 그래서 어떤 타입으로 선언하든 상관없다
+    // 하지만 텍스트필드를 생성할때는 반드시 바인딩기능있는텍스트필드로 생성해야 바인딩기능을 사용할 수 있다
+    private lazy var passwordTextField: UITextField = {
+        let tf = 바인딩기능있는텍스트필드()
         tf.textColor = .black
         tf.tintColor = .black
         tf.font = UIFont.systemFont(ofSize: 18)
@@ -89,6 +96,14 @@ final class ViewController: UIViewController {
         tf.isSecureTextEntry = true
         tf.clearButtonMode = .whileEditing
         tf.addTarget(self, action: #selector(textfieldEditingChanged(textField:)), for: .editingChanged)
+        
+        // 뷰가 변하면 => 뷰모델이 가지고 있는 데이터가 변하도록
+        // 바인딩기능텍스트필드에서 글자가 변할때마다 뷰모델의 emailString을 변하도록 만듦
+        tf.바인딩하기 { [weak self] text in
+            // 뷰에서 유저가 글자를 입력할때마다
+            // 뷰모델이 가지고 있는 emailString의 데이터값을 변하도록 만듦
+            self?.viewModel.passwordString.value = text
+        }
         return tf
     }()
     
@@ -361,10 +376,11 @@ extension ViewController: UITextFieldDelegate {
             viewModel.setEmailText(textField.text ?? "")
         }
         
+        // 바인딩기능텍스트필드로 구현해서 필요없음
         // ⭐️ Input: 비밀번호 입력 => 뷰모델에 전달
-        if textField == passwordTextField {
-            viewModel.setPasswordText(textField.text ?? "")
-        }
+//        if textField == passwordTextField {
+//            viewModel.setPasswordText(textField.text ?? "")
+//        }
         
         // 텍스트필드 이메일, 비밀번호 둘 다 채워지면 버튼 활성화
         guard let email = emailTextField.text, !email.isEmpty,

@@ -19,7 +19,10 @@ final class LoginViewModel {
     // 유저가 입력한 글자 데이터
     // 입력을 받아야하니까 입력받은 문자열을 저장할 수 있게 구현
     private var emailString: String = ""
-    private var passwordString: String = ""
+//    private var passwordString: String = ""  // 바인딩으로 구현 ↓↓↓
+    // 클래스로 감싸서 직접적으로 문자열데이터를 가진다
+//    var emailString = Observable("")
+    var passwordString: Observable<String> = Observable("")
     
     // ⭐️ 로그인 상태 데이터 (네트워크 통신 결과)
     private var loginStatus: LoginStatus = .none
@@ -28,21 +31,21 @@ final class LoginViewModel {
     func setEmailText(_ email: String) {
         emailString = email
     }
-    
-    func setPasswordText(_ password: String) {
-        passwordString = password
-    }
+    // 바인딩 기능을 넣으니까 굳이 Output, Input 구현할 필요없음
+//    func setPasswordText(_ password: String) {
+//        passwordString = password
+//    }
     
     func handleUserLogin(fromCurrentVC: UIViewController, animated: Bool) {
         
         // 입력창이 비어있는지 확인
-        guard !emailString.isEmpty && !passwordString.isEmpty else {
+        guard !emailString.isEmpty && !passwordString.value.isEmpty else {
             self.loginStatus = .validationFailed
             return
         }
         
         // 네트워크 통신한 후 결과 처리
-        APIService.shared.loginTest(username: emailString, password: passwordString) { [unowned self] result in
+        APIService.shared.loginTest(username: emailString, password: passwordString.value) { [unowned self] result in
             switch result {
             case .success():
                 // 로그인 데이터 상태 변경
@@ -68,8 +71,7 @@ final class LoginViewModel {
     // ⭐️ 화면 이동을 뷰모델에서 처리
     private func goToNextVC(fromCurrentVC: UIViewController, animated: Bool) {
         
-        // 다음화면도 뷰모델을 가져야하니까
-        // 현재 뷰모델의 데이터를 전달하면서 다음화면의 뷰모델 생성
+        // 다음화면도 뷰모델을 가져야하니까 현재 뷰모델의 데이터를 전달하면서 다음화면의 뷰모델 생성
         let firstVM = FirstPageViewModel(userEmail: self.emailString)
         let nextVC = FirstPageViewController(viewModel: firstVM)
         
