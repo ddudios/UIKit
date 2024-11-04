@@ -6215,7 +6215,7 @@ import UIKit
  
  protocol ProtocolType {}
  let metatypeInstance: ProtocolType.Protocol = ProtocolType.self
- */
+ 
 // available 키워드
 @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
 class 타입 {}
@@ -6237,3 +6237,151 @@ CustomView().method() // warning: 'method()' was deprecated in iOS 13: 😪
 func 메서드() {
     guard #available(iOS 13.0, *) else { return }
 }
+*/
+// 클로저: 캡처현상, 캡처리스트
+var variable: (() -> Void)?
+
+func function1(nonEscapingClosure: () -> Void) {
+    nonEscapingClosure()
+}
+
+func function2(escapingClosure: @escaping () -> Void) {
+    variable = escapingClosure
+}
+
+
+struct ValueType {
+    var x = 0
+    
+    mutating func structFunction() {
+        
+        function1(nonEscapingClosure: {
+            x = 10
+            self.x = 20
+        })
+        
+        function2(escapingClosure: {
+//            x = 10
+//            self.x = 20
+        })
+    }
+}
+
+
+class ReferenceType {
+    var x = 0
+    
+    func classFunction() {
+        
+        function1 {
+            x = 10
+            self.x = 20
+        }
+        
+        function2 {
+//            x = 30
+            self.x = 40
+        }
+        
+        function2 { [self] in
+            x = 50
+            self.x = 60
+        }
+    }
+}
+
+let instance = ReferenceType()
+instance.classFunction()
+print(instance.x)  // 20
+variable?()
+print(instance.x)  // 60
+
+// 에러핸들링
+// 에러처리 문법 사용하지 않고 nil로도 처리 가능
+func divideTwoNum(a: Int, b: Int) -> Int? {
+    if b == 0 {
+        return nil
+    }
+    return a / b
+}
+
+print(divideTwoNum(a: 10, b: 0))  // nil
+
+// 에러처리 문법
+// 1. 에러 정의
+enum DivideError: Error {
+    case zero
+}
+
+// 2. throwing함수 정의: throws / throw
+func divideTwoNum1(a: Int, b: Int) throws -> Int {
+    if b == 0 {
+        throw DivideError.zero
+    }
+    return a / b
+}
+
+// 3. throwing함수 실행
+// do-catch / try
+do {
+    let result = try divideTwoNum1(a: 10, b: 0)
+    print(result)
+} catch {
+    let error = error as! DivideError
+    switch error {
+    case .zero:
+        print("0으로 나눌 수 없습니다.")
+    }
+}  // 0으로 나눌 수 없습니다.
+
+// try?
+let result = try? divideTwoNum1(a: 10, b: 0)
+print(result ?? "0으로 나눌 수 없습니다.")  // 0으로 나눌 수 없습니다.
+
+// 에러를 정의(열거형)하지 않고 사용
+extension String: Error {}
+
+func divideTwoNum2(a: Int, b: Int) throws -> Int {
+    if b == 0 {
+        throw "연산 불가"
+    }
+    return a / b
+}
+
+do {
+    print(try divideTwoNum2(a: 10, b: 0))
+} catch {
+    let error = error as! String
+    print(error)
+}  // 연산 불가
+
+// 함수로 에러 다시 던지기
+func rethrowingFunction() throws -> Int {
+    return try divideTwoNum1(a: 10, b: 0)
+}
+
+do {
+    try rethrowingFunction()
+} catch {
+    let error = error as! DivideError
+    switch error {
+        case .zero:
+        print("0으로 나눌 수 없습니다.")
+    }
+}  // 0으로 나눌 수 없습니다.
+
+// 함수 내에서 에러처리까지 해서 작업완료
+func errorhandling() {
+    do {
+        let result = try divideTwoNum1(a: 10, b: 0)
+        print("몫: ", result)
+    } catch {
+        let error = error as! DivideError
+        switch error {
+        case .zero:
+            print("연산 불가")
+        }
+    }
+}
+
+errorhandling()  // 연산 불가
